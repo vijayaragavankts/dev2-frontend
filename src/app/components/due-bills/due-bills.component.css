@@ -1,0 +1,38 @@
+.card {
+  border: 1px solid #e0e0e0; /* Light gray border for a subtle separation */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Slight lift effect */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+}
+
+.card-header {
+  background-color: #f8f9fa; /* Light background for contrast */
+  border-bottom: 1px solid #e0e0e0; /* Subtle division */
+}
+
+.card-title {
+  font-family: "Dancing Script", cursive; /* Elegant font */
+  font-size: 24px; /* Reduced size for a classic feel */
+  color: #333; /* Dark gray for a softer contrast */
+  margin: 0;
+}
+
+.text-muted {
+  color: #6c757d; /* Muted text color for non-primary information */
+}
+
+.font-weight-bold {
+  font-weight: bold; /* Emphasizes important data */
+}
+
+.btn-danger {
+  background-color: #dc3545; /* Bootstrap's primary danger color */
+  border: none; /* Removes default border */
+}
+
+.btn-danger:hover {
+  background-color: #c82333; /* Darker shade on hover */
+}

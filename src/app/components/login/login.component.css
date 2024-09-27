@@ -1,0 +1,65 @@
+.container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+} */
+h2 {
+  font-size: 2rem; /* Larger font size for the header */
+  font-weight: bold; /* Bold font weight */
+  color: #343a40; /* Dark color for better contrast */
+  margin-bottom: 1.5rem; /* Space below the header */
+}
+.form-label {
+  font-size: 1.1rem; /* Slightly larger font for labels */
+  font-weight: 600; /* Semi-bold font weight for labels */
+  color: #495057; /* Soft dark color */
+  margin-top: 0.5rem; /* Space above the labels */
+  display: block; /* Ensure labels take full width */
+}
+genre {
+  color: #666;
+  font-weight: bold;
+}
+
+input[type="text"] {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.blue-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: #5c67f2; /* Aesthetic blue shade */
+  cursor: pointer;
+}
+
+.blue-btn:hover {
+  background-color: #4a54e1; /* Slightly darker on hover */
+}
+
+.text-danger {
+  color: #e3342f;
+}
+
+.spinner-border {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}

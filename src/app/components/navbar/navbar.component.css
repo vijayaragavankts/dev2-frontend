@@ -1,0 +1,80 @@
+#sidebar {
+  width: 280px; /* Increased from 220px */
+  padding: 20px; /* Increased padding for larger appearance */
+  background-color: #f8f9fa;
+}
+
+.company-name {
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  text-align: center; /* Centering the text */
+  letter-spacing: 1px;
+  font-family: "Dancing Script", cursive;
+  font-size: 46px; /* Adjust size as needed */
+  text-align: center; /* Centering the text */
+  margin: 20px 0; /* Space around the text */
+}
+
+.nav-link {
+  font-size: 20px;
+  color: #333;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  display: flex; /* This ensures the icon and text stay in one line */
+  align-items: center; /* Aligns the icon with the text vertically */
+  white-space: nowrap; /* Prevents text from wrapping onto multiple lines */
+}
+
+.nav-link.active {
+  background-color: #f8f9fa;
+}
+
+.nav-link i {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.nav-item {
+  margin-top: 15px; /* Adjust space as needed */
+}
+
+.logout {
+  position: absolute;
+  bottom: 20px; /* Space from the bottom */
+  width: 100%;
+}
+.full-width {
+  width: 70%; /* Full width */
+  padding: 10px; /* Add some padding for better appearance */
+}
+
+/* Other existing styles remain the same */
+
+/* Responsive: Collapsing Navbar for Mobile */
+@media (max-width: 768px) {
+  #sidebar {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    left: -100%;
+    transition: all 0.3s;
+  }
+
+  #sidebar.active {
+    left: 0;
+  }
+}
+
+.main-content {
+  margin-left: 220px;
+  width: calc(100% - 220px);
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+}
