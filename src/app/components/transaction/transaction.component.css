@@ -1,0 +1,120 @@
+.card {
+  border-radius: 15px;
+}
+.btn {
+  transition: background-color 0.3s;
+}
+/* .btn:hover {
+  background-color: #ff4c4c;
+} */
+.card-title {
+  font-family: "Dancing Script", cursive; /* Elegant font */
+  font-size: 24px; /* Reduced size for a classic feel */
+  color: #333; /* Dark gray for a softer contrast */
+  margin: 0;
+}
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 70vw;
+}
+.spinner {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 60px; /* Size of the spinner */
+  height: 60px; /* Size of the spinner */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.cash-icon {
+  color: #4caf50;
+  font-size: 26px;
+  /* animation: tada 1s infinite; */
+}
+
+.card-icon {
+  color: #007bff;
+  font-size: 26px;
+  /* animation: tada 1s infinite; */
+}
+
+.wallet-icon {
+  color: #8b4513;
+  font-size: 26px;
+  /* animation: tada 1s infinite; */
+}
+
+@keyframes tada {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  10%,
+  20% {
+    transform: scale(0.9) rotate(-3deg);
+  }
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: scale(1.1) rotate(3deg);
+  }
+  40%,
+  60%,
+  80% {
+    transform: scale(1.1) rotate(-3deg);
+  }
+}
+
+.transaction-status {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-family: "Dancing Script", cursive;
+  font-size: 1.5rem;
+  transform: rotate(0deg);
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 5px;
+  color: #f60808;
+}
+
+.card {
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.label {
+  font-weight: 500;
+  color: gray;
+}
+
+.value {
+  font-weight: 600;
+  color: #495057;
+}
+
+.status-icon {
+  color: #a81010;
+  font-size: 40px;
+}
+.status-partial {
+  color: blue;
+}
+.status-full {
+  color: rgb(4, 149, 4);
+}

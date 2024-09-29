@@ -1,1 +1,164 @@
-<p>transaction works!</p>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <ng-container *ngIf="loading; else transactionList">
+      <div class="loader-container">
+        <div class="spinner"></div>
+      </div>
+    </ng-container>
+
+    <ng-template #transactionList>
+      <ng-container *ngIf="transactions.length > 0; else noTransactionTemplate">
+        <div
+          class="col-md-6 col-lg-4 mb-4"
+          *ngFor="let transaction of transactions"
+        >
+          <div class="card shadow border-0 h-100 position-relative">
+            <!-- <div
+              class="transaction-status"
+              [ngClass]="{
+                'status-partial': transaction.invoice_status === 'PARTIAL',
+                'status-full': transaction.invoice_status === 'FULL',
+                'status-failed': transaction.invoice_status === 'FAILED'
+              }"
+            >
+              {{
+                transaction.invoice_status === "PARTIAL"
+                  ? "Partial"
+                  : transaction.invoice_status === "FULL"
+                  ? "Full"
+                  : "Failed"
+              }}
+            </div> -->
+
+            <!-- Success and Error Icons -->
+            <div class="position-absolute" style="top: 10px; right: 10px">
+              <ng-container *ngIf="transaction.invoice_status === 'FULL'">
+                <i
+                  class="fas fa-check-circle"
+                  style="color: #28a745; font-size: 30px"
+                ></i>
+              </ng-container>
+              <ng-container *ngIf="transaction.invoice_status === 'FAILED'">
+                <i
+                  class="fas fa-times-circle"
+                  style="color: #dc3545; font-size: 30px"
+                ></i>
+              </ng-container>
+              <ng-container *ngIf="transaction.invoice_status === 'PARTIAL'">
+                <i
+                  class="fas fa-hourglass-half"
+                  style="color: #4d82d2; font-size: 30px"
+                ></i>
+                <!-- Icon for partially paid -->
+              </ng-container>
+            </div>
+
+            <div class="card-header bg-gradient-primary text-light text-center">
+              <h4 class="card-title mb-0">
+                Transaction #{{ transaction.transactionId }}
+              </h4>
+            </div>
+
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between mb-3">
+                <span class="label">Total Amount Paid:</span>
+                <span class="value">{{
+                  transaction.amount == null
+                    ? 0
+                    : (transaction.amount | currency : "INR")
+                }}</span>
+              </div>
+
+              <div class="d-flex justify-content-between mb-3">
+                <span class="label">Payment Method Used:</span>
+                <span class="value">
+                  <span
+                    *ngIf="transaction.paymentMethod === 'cash'"
+                    class="cash-icon"
+                    >💵</span
+                  >
+                  <span
+                    *ngIf="transaction.paymentMethod === 'card'"
+                    class="card-icon"
+                    >💳</span
+                  >
+                  <span
+                    *ngIf="transaction.paymentMethod === 'wallet'"
+                    class="wallet-icon"
+                    >💰</span
+                  >
+                  {{ transaction.paymentMethod.toUpperCase() }}
+                </span>
+              </div>
+
+              <div class="d-flex justify-content-between mb-3">
+                <span class="label">Paid On:</span>
+                <span class="value">{{
+                  transaction.transactionDate | date : "MMM d, y, h:mm a"
+                }}</span>
+              </div>
+            </div>
+
+            <div
+              *ngIf="
+                transaction.status !== 'SUCCESS' &&
+                transaction.status !== 'FAILED'
+              "
+              class="d-flex justify-content-between mb-3"
+            >
+              <span class="label">Current Status:</span>
+              <span class="value text-capitalize">
+                {{ transaction.status }}
+              </span>
+            </div>
+
+            <div class="card-footer bg-white text-center py-3">
+              <button
+                class="btn btn-primary w-75"
+                [disabled]="transaction.status !== 'FAILED'"
+                [ngClass]="{
+                  'btn-secondary': transaction.status === 'SUCCESS',
+                  'btn-dark': transaction.status === 'FAILED'
+                }"
+                style="
+                  border-radius: 25px;
+                  font-weight: 600;
+                  padding: 10px 20px;
+                "
+              >
+                {{
+                  transaction.status === "FAILED"
+                    ? "Retry Payment"
+                    : "Payment Successful"
+                }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-template>
+
+    <ng-template #noTransactionTemplate>
+      <div class="col-12 text-center mt-5">
+        <div class="no-transactions-container">
+          <i
+            class="fas fa-folder-open"
+            style="font-size: 60px; color: #ffc107"
+          ></i>
+          <h4 class="text-muted mt-3">No Transactions Available</h4>
+          <p class="text-secondary mb-4">
+            It seems you haven't made any transactions yet. Start managing your
+            bills today!
+          </p>
+          <button
+            class="btn btn-primary"
+            style="border-radius: 25px; font-weight: 600; padding: 10px 20px"
+            (click)="navigateToBills()"
+          >
+            View Bills
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

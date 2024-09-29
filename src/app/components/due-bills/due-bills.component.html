@@ -1,45 +1,78 @@
-<div class="container">
-  <div class="row">
-    <ng-container *ngIf="unpaidBills.length > 0; else noBillsTemplate">
-      <div class="col-md-4 mb-4" *ngFor="let bill of unpaidBills">
-        <div class="card shadow-lg border-light">
-          <div class="card-header text-center bg-light">
-            <h5 class="card-title">Invoice #{{ bill.invoice_id }}</h5>
-          </div>
-          <div class="card-body">
-            <div class="d-flex justify-content-between mb-2">
-              <span class="text-muted">Start Date: </span>
-              <span class="font-weight-bold">{{ bill.start_date | date }}</span>
-            </div>
-            <div class="d-flex justify-content-between mb-2">
-              <span class="text-muted">Due Date: </span>
-              <span class="font-weight-bold">{{ bill.due_date | date }}</span>
-            </div>
-            <div class="d-flex justify-content-between mb-2">
-              <span class="text-muted">Units Consumed: </span>
-              <span class="font-weight-bold">{{ bill.unit_consumed }}</span>
-            </div>
-            <div class="d-flex justify-content-between mb-3">
-              <span class="text-muted">Amount Due: </span>
-              <span class="font-weight-bold">{{
-                bill.amount | currency : "INR"
-              }}</span>
-            </div>
-          </div>
-          <div class="text-center">
-            <button
-              [class]="'btn btn-danger w-75 mb-4'"
-              style="border-radius: 25px; font-weight: 600; padding: 5px 15px"
-            >
-              Pay Now
-            </button>
-          </div>
-        </div>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <!-- Show loader while fetching data -->
+    <ng-container *ngIf="loading; else billsTemplate">
+      <div class="loader-container">
+        <div class="spinner"></div>
       </div>
     </ng-container>
+
+    <ng-template #billsTemplate>
+      <ng-container *ngIf="unpaidBills.length > 0; else noBillsTemplate">
+        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let bill of unpaidBills">
+          <div class="card shadow border-0 h-100 position-relative">
+            <div class="card-header bg-gradient-primary text-light text-center">
+              <h4 class="card-title mb-0">Bill #{{ bill.invoice_id }}</h4>
+            </div>
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between mb-3">
+                <span class="text-secondary">Start Date:</span>
+                <span class="font-weight-bold">{{
+                  bill.start_date | date
+                }}</span>
+              </div>
+              <div class="d-flex justify-content-between mb-3">
+                <span class="text-secondary">Due Date:</span>
+                <span class="font-weight-bold">{{ bill.due_date | date }}</span>
+              </div>
+              <div class="d-flex justify-content-between mb-3">
+                <span class="text-secondary">Units Consumed:</span>
+                <span class="font-weight-bold">{{ bill.unit_consumed }}</span>
+              </div>
+              <div class="d-flex justify-content-between mb-3">
+                <span class="text-secondary">Amount Due:</span>
+                <span class="font-weight-bold">{{
+                  bill.amount | currency : "INR"
+                }}</span>
+              </div>
+            </div>
+            <div class="card-footer bg-white text-center py-3">
+              <button
+                class="btn btn-danger w-75"
+                style="
+                  border-radius: 25px;
+                  font-weight: 600;
+                  padding: 10px 20px;
+                "
+                (click)="openBillDetails(bill)"
+              >
+                Pay Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-template>
+
     <ng-template #noBillsTemplate>
       <div class="col-12 text-center">
-        <h5 class="text-muted">No bills to pay</h5>
+        <div class="empty-state my-5">
+          <i
+            class="fas fa-file-invoice-dollar"
+            style="font-size: 50px; color: #6c757d"
+          ></i>
+          <h4 class="text-muted mt-3">No Bills to Pay</h4>
+          <p class="text-muted mb-4">
+            It looks like you have no outstanding bills at the moment.
+          </p>
+          <!-- <button
+        class="btn btn-primary"
+        (click)="navigateToBills()"
+        style="border-radius: 25px; font-weight: 600; padding: 10px 20px;"
+      >
+        View Previous Bills
+      </button> -->
+        </div>
       </div>
     </ng-template>
   </div>

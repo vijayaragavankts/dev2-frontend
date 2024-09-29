@@ -15,6 +15,7 @@ export class DueBillsComponent {
   customerId: string = '';
   bills: Bill[] = [];
   unpaidBills: Bill[] = [];
+  loading: boolean = true; // Loading state
   selectedBill: Bill | null = null;
 
   ngOnInit(): void {
@@ -30,9 +31,11 @@ export class DueBillsComponent {
         this.bills = data;
         console.log(this.bills);
         this.filterUnpaidBills();
+        this.loading = false;
       },
       (error) => {
         console.error('Error fetching invoices', error);
+        this.loading = false;
       }
     );
   }
