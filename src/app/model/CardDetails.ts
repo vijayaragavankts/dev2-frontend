@@ -1,11 +1,14 @@
 import { Customer } from './Customer';
 
 export interface CardDetails {
-  id: number;
+  id?: number;
   cardNumber: string;
   cardHolderName: string;
-  expiryDate: string; // Can store as string (e.g., 'MM/YY')
+  expiryDate?: string; // Can store as string (e.g., 'MM/YY')
+  expMonth?: string; // Expiry month (MM)
+  expYear?: string;
   cvv: string;
   cardType: string;
-  customer: Customer;
+  customerId: string;
+  
 }

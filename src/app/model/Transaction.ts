@@ -5,11 +5,12 @@ import { WalletDetails } from './WalletDetails';
 
 export interface Transaction {
   transactionId: number;
-  customer: Customer;
-  invoice: Bill;
+  customerId: string;
+  invoiceId: number;
   amount: number;
   status: string;
   transactionDate: string; // ISO string format for LocalDateTime
+  cardId: number;
   paymentMethod: string;
   isEarly: boolean;
   invoice_status: string;

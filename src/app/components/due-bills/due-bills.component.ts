@@ -3,11 +3,12 @@ import { Bill } from '../../model/Bill';
 import { BillService } from '../../service/bill/bill.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-due-bills',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './due-bills.component.html',
   styleUrl: './due-bills.component.css',
 })
@@ -23,7 +24,7 @@ export class DueBillsComponent {
     this.fetchInvoices();
   }
 
-  constructor(private billService: BillService) {}
+  constructor(private billService: BillService, private router: Router) {}
 
   fetchInvoices() {
     this.billService.getBills(this.customerId).subscribe(
@@ -41,12 +42,17 @@ export class DueBillsComponent {
   }
   filterUnpaidBills() {
     // Assuming the Bill model has a 'status' property
-    this.unpaidBills = this.bills.filter((bill) => bill.status === 'PENDING');
+    this.unpaidBills = this.bills.filter(
+      (bill) => bill.status === 'PENDING' || bill.status === 'PARTIALLY'
+    );
     console.log(this.unpaidBills); // Log unpaid bills
   }
 
   openBillDetails(bill: Bill) {
     this.selectedBill = bill; // Set the selected bill
+    this.router.navigate(['/dashboard/payment-gateway'], {
+      queryParams: { billId: bill.invoice_id },
+    });
   }
 
   closeModal() {

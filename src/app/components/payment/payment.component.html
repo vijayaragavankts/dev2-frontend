@@ -1,0 +1,114 @@
+<div class="container mt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb custom-breadcrumb bg-light p-3 rounded shadow-sm">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/dashboard/due-bills']" class="breadcrumb-link">
+          <i class="fas fa-file-alt mr-2"></i> Due Bills
+        </a>
+      </li>
+      <li class="breadcrumb-item">
+        <a
+          [routerLink]="['/dashboard/payment-gateway']"
+          [queryParams]="{ billId: billId }"
+          class="breadcrumb-link"
+        >
+          <i class="fas fa-credit-card mr-2"></i> Payment Gateway
+        </a>
+      </li>
+      <li class="breadcrumb-item">
+        <a
+          [routerLink]="['/dashboard/payments', cardId ? 'card' : 'wallet']"
+          [queryParams]="{ billId: billId }"
+          class="breadcrumb-link"
+        >
+          <i
+            class="fas"
+            [ngClass]="{
+              'fa-credit-card mr-2': cardId,
+              'fa-wallet mr-2': !cardId
+            }"
+          ></i>
+          {{ cardId ? "Card" : "Wallet" }}
+        </a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <i class="fas fa-money-bill-wave mr-2"></i> Payment
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<!-- Breadcrumb over -->
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <!-- Loader -->
+      <div *ngIf="!selectedBill" class="text-center my-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <p>Loading bill details...</p>
+      </div>
+
+      <!-- Bill Details -->
+      <div
+        *ngIf="selectedBill"
+        class="bill-details mb-4 p-4 shadow-lg bg-gradient rounded"
+      >
+        <h5 class="mb-3">
+          <i class="fas fa-receipt mr-2"></i> Bill #{{
+            selectedBill.invoice_id
+          }}
+        </h5>
+        <p><strong>Due Date:</strong> {{ selectedBill.due_date | date }}</p>
+        <p><strong>Units Consumed:</strong> {{ selectedBill.unit_consumed }}</p>
+        <p>
+          <strong>Amount Due:</strong>
+          {{ selectedBill.amount | currency : "INR" }}
+        </p>
+
+        <!-- Discount Notification -->
+        <div
+          *ngIf="finalAmount !== null && selectedBill.status != 'PARTIALLY'"
+          class="alert alert-info"
+        >
+          <i class="fas fa-tags mr-2"></i> <strong> Discount Available!</strong>
+          You have a total discount of
+          {{ baseDiscount }}%.
+          <br />
+          <strong>Final Amount to Pay:</strong>
+          {{ finalAmount | currency : "INR" }}
+        </div>
+      </div>
+
+      <div *ngIf="selectedBill" class="payment-section bg-light p-4 rounded">
+        <h5 class="mb-3">
+          <i class="fas fa-money-bill-alt mr-2"></i> Make a Payment
+        </h5>
+
+         <form [formGroup]="paymentForm" (ngSubmit)="makePayment()">
+          <div class="form-group">
+            <label for="paymentAmount">Enter Amount to Pay:</label>
+            <input
+              type="text"
+              class="form-control mt-3 mt-2"
+              id="paymentAmount"
+              formControlName="paymentAmount"
+              placeholder="Enter amount"
+              min="1"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary mt-3"
+            [disabled]="paymentForm.invalid"
+          >
+            <i class="fas fa-check-circle mr-2"></i> Pay Now
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

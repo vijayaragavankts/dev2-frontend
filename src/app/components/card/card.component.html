@@ -1,0 +1,223 @@
+<div class="container mt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb custom-breadcrumb bg-light p-3 rounded shadow-sm">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/dashboard/due-bills']" class="breadcrumb-link">
+          <i class="fas fa-file-alt mr-2"></i> Due Bills
+        </a>
+      </li>
+      <li class="breadcrumb-item">
+        <a
+          [routerLink]="['/dashboard/payment-gateway']"
+          [queryParams]="{ billId: billId }"
+          class="breadcrumb-link"
+        >
+          <i class="fas fa-credit-card mr-2"></i> Payment Gateway
+        </a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <i class="fas fa-wallet mr-2"></i> Card
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<!-- Spinner -->
+<div *ngIf="loading" class="text-center my-5 spinner-container">
+  <div class="spinner"></div>
+</div>
+
+<!-- Display the avaliable cards for the customerID -->
+<!-- Display the existing cards for the customer ID -->
+<!-- Check if cards are available -->
+<div *ngIf="!loading && cards.length > 0; else noCards" class="container mt-5">
+  <h5 class="mb-4">Your Saved Cards</h5>
+  <div class="row">
+  <div
+    *ngFor="let card of cards"
+    class="col-md-4 mb-3"
+    (click)="navigateToPayment(card.id)"
+    style="cursor: pointer"
+  >
+    <div class="card-container shadow-sm">
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card">
+            <div class="chip">
+              <div class="horizontal-line"></div>
+              <div class="horizontal-line"></div>
+              <div class="horizontal-line"></div>
+              <div class="vertical-line vertical-1"></div>
+              <div class="vertical-line vertical-2"></div>
+            </div>
+          </div>
+          <h6 class="card-title">
+            <i class="fas fa-wifi mr-2"></i>
+          </h6>
+        </div>
+        <div class="card-details">
+          <p class="card-number">
+            {{ formatCardNumber(card.cardNumber) }}
+          </p>
+          <p class="expiry-date">VALID THRU: {{ card.expiryDate }}</p>
+          <p class="card-holder">
+            <strong>{{ card.cardHolderName }}</strong>
+          </p>
+        </div>
+        <!-- Card Icon positioned at the bottom-right corner -->
+        <i
+          [ngClass]="getCardIconClass(card.cardType)"
+          class="card-icon-bottom-right"
+        ></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- No cards found message -->
+<ng-template #noCards>
+  <div class="container mt-5">
+    <h5>No saved cards found.</h5>
+  </div>
+</ng-template>
+
+<!-- Card Details Form -->
+<h5 class="mb-4">Add Card</h5>
+<div class="container mt-5 form-contain">
+  <form
+    [formGroup]="cardDetailsForm"
+    (ngSubmit)="onSubmit()"
+    class="form-section"
+  >
+    <div class="form-group mb-3">
+      <label for="cardType" class="form-label fw-bold">CARD TYPE:</label>
+      <select id="cardType" formControlName="cardType" class="form-control">
+        <option value="" disabled selected>Select Card Type</option>
+        <option value="visa">Visa</option>
+        <option value="mastercard">Mastercard</option>
+        <option value="amex">American Express</option>
+        <option value="discover">Discover</option>
+        <option value="jcb">JCB</option>
+        <option value="dinersclub">Diners Club</option>
+        <option value="unionpay">UnionPay</option>
+        <option value="maestro">Maestro</option>
+        <option value="rupay">RuPay</option>
+      </select>
+      <div
+        *ngIf="submitted && cardDetailsForm.get('cardType')?.invalid"
+        class="text-danger mt-1"
+      >
+        <small>Card type is required.</small>
+      </div>
+    </div>
+
+    <!-- Card Holder Name Input -->
+    <div class="form-group mb-3">
+      <label for="cardHolderName" class="form-label fw-bold"
+        >CARDHOLDER NAME:</label
+      >
+      <input
+        id="cardHolderName"
+        formControlName="cardHolderName"
+        type="text"
+        class="form-control"
+        placeholder="e.g. Jane Appleseed"
+      />
+      <div
+        *ngIf="submitted && cardDetailsForm.get('cardHolderName')?.invalid"
+        class="text-danger mt-1"
+      >
+        <small>Card holder name is required.</small>
+      </div>
+    </div>
+
+    <!-- Card Number Input -->
+    <div class="form-group mb-3">
+      <label for="cardNumber" class="form-label fw-bold">CARD NUMBER:</label>
+      <input
+        id="cardNumber"
+        formControlName="cardNumber"
+        type="text"
+        class="form-control"
+        placeholder="e.g. 1234 5678 9123 0000"
+      />
+      <div
+        *ngIf="submitted && cardDetailsForm.get('cardNumber')?.invalid"
+        class="text-danger mt-1"
+      >
+        <small>Card number must be 16 digits.</small>
+      </div>
+    </div>
+
+    <!-- Expiry Date (MM/YY) and CVC -->
+    <div class="form-group mb-3 row">
+      <div class="col-md-4">
+        <label for="expiryMonth" class="form-label fw-bold"
+          >EXP. DATE (MM):</label
+        >
+        <select
+          id="expiryMonth"
+          formControlName="expMonth"
+          class="form-control"
+        >
+          <option value="" disabled selected>MM</option>
+          <option *ngFor="let month of months" [value]="month">
+            {{ month }}
+          </option>
+        </select>
+        <div
+          *ngIf="submitted && cardDetailsForm.get('expMonth')?.invalid"
+          class="text-danger mt-1"
+        >
+          <small>Month is required.</small>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="expiryYear" class="form-label fw-bold"
+          >EXP. YEAR (YY):</label
+        >
+        <select id="expiryYear" formControlName="expYear" class="form-control">
+          <option value="" disabled selected>YYYY</option>
+          <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+        </select>
+        <div
+          *ngIf="submitted && cardDetailsForm.get('expYear')?.invalid"
+          class="text-danger mt-1"
+        >
+          <small>Year is required.</small>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="cvvx" class="form-label fw-bold">CVC:</label>
+        <input
+          id="cvc"
+          formControlName="cvv"
+          type="text"
+          class="form-control"
+          placeholder="e.g. 123"
+        />
+        <div
+          *ngIf="submitted && cardDetailsForm.get('cvv')?.invalid"
+          class="text-danger mt-1"
+        >
+          <small>CVC must be 3 digits.</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm Button -->
+    <div class="text-center mb-3">
+      <button
+        type="submit"
+        class="btn btn-primary btn-lg w-100"
+        (click)="submitted = true"
+      >
+        Save Card
+      </button>
+    </div>
+  </form>
+</div>

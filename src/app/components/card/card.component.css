@@ -1,0 +1,276 @@
+.custom-breadcrumb {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 235, 235, 1) 100%
+  );
+  border-left: 5px solid #ff5f5f;
+  font-weight: 500;
+}
+
+.breadcrumb-link {
+  color: #ff5f5f;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.breadcrumb-link:hover {
+  color: #d12d2d;
+}
+
+.breadcrumb-item.active {
+  font-weight: 700;
+  color: #333;
+}
+
+.breadcrumb i {
+  margin-right: 6px;
+  font-size: 1.2rem;
+}
+
+/* Adding a shadow for depth */
+.breadcrumb.custom-breadcrumb {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Making sure the breadcrumb items don't wrap on smaller screens */
+.breadcrumb-item {
+  white-space: nowrap;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #343a40;
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  /* font-size: 1.1rem; */
+  /* font-weight: 600; */
+  color: #495057;
+  margin-top: 0.5rem;
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 14px;
+}
+
+input[type="text"] {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.blue-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: #5c67f2; /* Aesthetic blue shade */
+  cursor: pointer;
+}
+
+.blue-btn:hover {
+  background-color: #4a54e1; /* Slightly darker on hover */
+}
+
+.text-danger {
+  color: #e3342f;
+}
+
+.spinner-border {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.custom-breadcrumb {
+  background-color: #f8f9fa; /* Light background for the breadcrumb */
+}
+
+/* .container {
+  max-width: 500px;
+  margin: 0 auto;
+} */
+
+.form-contain {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.form-control {
+  border-radius: 8px;
+  border: 1px solid #d1d1d1;
+  padding: 10px;
+}
+
+.form-control-lg {
+  font-size: 1.25rem;
+}
+
+.btn-dark {
+  background-color: #4e1850;
+  color: white;
+}
+
+.is-invalid {
+  border-color: red;
+}
+
+/* Spinner Styles */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px; /* Adjust the height as needed */
+}
+
+.spinner {
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #ff416c; /* Customize the spinner color */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.card-container {
+  background-color: #1f2937;
+  color: white;
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-body {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; */
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.card-icon-bottom-right {
+  position: absolute;
+  bottom: 10px; /* Adjust as needed for spacing */
+  right: 10px; /* Adjust as needed for spacing */
+  font-size: 48px; /* Larger size for the icon */
+  color: #000; /* Adjust color as needed */
+  opacity: 0.7; /* Optional for slight transparency */
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 1.2rem; /* Adjust font size */
+  margin-bottom: 10px;
+}
+
+.card-title i {
+  font-size: 2rem; /* Increase the icon size */
+  color: white; /* Default icon color */
+}
+
+/* Visa original blue color */
+.visa-icon {
+  color: #2c3593;
+}
+
+/* MasterCard original color */
+.mastercard-icon {
+  color: #eb001b; /* red */
+  background: linear-gradient(90deg, #ff5f00 50%, #f79e1b 50%);
+  border-radius: 50%;
+}
+
+/* Amex original blue color */
+.amex-icon {
+  color: #007bc1;
+}
+
+/* Discover original orange color */
+.discover-icon {
+  color: #f58220;
+}
+
+/* JCB original color */
+.jcb-icon {
+  color: #0061aa;
+}
+
+/* Diners Club original blue color */
+.dinersclub-icon {
+  color: #00677f;
+}
+
+/* UnionPay original color */
+.unionpay-icon {
+  color: #2e8b57;
+}
+
+/* Maestro original color */
+.maestro-icon {
+  color: #cc0000;
+}
+
+/* Generic Credit Card */
+.generic-card-icon {
+  color: #555;
+}
+
+.fa-wifi {
+  transform: rotate(90deg);
+}
+
+.chip {
+  width: 40px; /* Width of the chip */
+  height: 35px; /* Height of the chip */
+  background-color: gold; /* Chip background color */
+  border-radius: 5px; /* Rounded chip */
+}
+
+.card-details {
+  margin-top: 20px; /* Space above details */
+}
+
+.card-number {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.5rem; /* Card number size */
+  letter-spacing: 2px; /* Space between digits */
+  margin: 10px 0; /* Margin above and below */
+}
+
+.expiry-date {
+  font-size: 0.9rem; /* Smaller font for expiry date */
+  margin: 5px 0; /* Margin above and below */
+}
+
+.card-holder {
+  font-size: 1rem; /* Cardholder name size */
+  margin: 5px 0; /* Margin above and below */
+}

@@ -1,0 +1,23 @@
+<div class="container mt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb custom-breadcrumb bg-light p-3 rounded shadow-sm">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/dashboard/due-bills']" class="breadcrumb-link">
+          <i class="fas fa-file-alt mr-2"></i> Due Bills
+        </a>
+      </li>
+      <li class="breadcrumb-item">
+        <a
+          [routerLink]="['/dashboard/payment-gateway']"
+          [queryParams]="{ billId: billId }"
+          class="breadcrumb-link"
+        >
+          <i class="fas fa-credit-card mr-2"></i> Payment Gateway
+        </a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <i class="fas fa-wallet mr-2"></i> Wallet
+      </li>
+    </ol>
+  </nav>
+</div>

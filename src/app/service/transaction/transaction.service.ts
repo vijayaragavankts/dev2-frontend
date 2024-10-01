@@ -13,7 +13,7 @@ export class TransactionService {
   // Create a new transaction
   createTransaction(transaction: Transaction): Observable<Transaction> {
     return this.http.post<Transaction>(
-      `${this.baseUrl}/create`,
+      `${this.baseUrl}`,
       transaction,
       {}
     );

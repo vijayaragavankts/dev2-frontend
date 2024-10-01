@@ -14,4 +14,7 @@ export class BillService {
   getBills(customerId: string): Observable<Bill[]> {
     return this.http.get<Bill[]>(`${this.baseUrl}/${customerId}`);
   }
+  getBillsByInvoiceId(invoiceId: number): Observable<Bill> {
+    return this.http.get<any>(`${this.baseUrl}/invoice/${invoiceId}`);
+  }
 }

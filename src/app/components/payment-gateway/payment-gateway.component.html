@@ -1,0 +1,84 @@
+<div class="container mt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb custom-breadcrumb bg-light p-3 rounded shadow-sm">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/dashboard/due-bills']" class="breadcrumb-link">
+          <i class="fas fa-file-alt mr-2"></i> Due Bills
+        </a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <i class="fas fa-credit-card mr-2"></i> Payment Gateway
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <!-- Loader -->
+      <div *ngIf="!selectedBill" class="text-center my-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <p>Loading bill details...</p>
+      </div>
+
+      <!-- Bill Details -->
+      <div
+        *ngIf="selectedBill"
+        class="bill-details mb-4 p-4 shadow-lg bg-gradient rounded"
+      >
+        <h5 class="mb-3">
+          <i class="fas fa-receipt mr-2"></i> Bill #{{
+            selectedBill.invoice_id
+          }}
+        </h5>
+        <p><strong>Due Date:</strong> {{ selectedBill.due_date | date }}</p>
+        <p><strong>Units Consumed:</strong> {{ selectedBill.unit_consumed }}</p>
+        <p>
+          <strong>Amount Due:</strong>
+          {{ selectedBill.amount | currency : "INR" }}
+        </p>
+
+        <!-- Discount Notification -->
+        <div
+          *ngIf="finalAmount !== null && selectedBill.status != 'PARTIALLY'"
+          class="alert alert-info"
+        >
+          <i class="fas fa-tags mr-2"></i> <strong> Discount Available!</strong>
+          You have a total discount of
+          {{
+            baseDiscount
+          }}%.
+          <br />
+          <strong>Final Amount to Pay:</strong>
+          {{ finalAmount | currency : "INR" }}
+        </div>
+      </div>
+
+      <!-- Payment Methods -->
+      <div class="payment-methods p-4 shadow-lg bg-gradient rounded">
+        <h5>Select Payment Method:</h5>
+        <div class="row">
+          <div class="col-md-6 text-center">
+            <button
+              class="btn btn-primary btn-block my-3 payment-btn"
+              (click)="proceedToPay('card')"
+            >
+              <i class="fas fa-credit-card mr-2"></i> Pay with Card
+            </button>
+          </div>
+          <div class="col-md-6 text-center">
+            <button
+              class="btn btn-success btn-block my-3 payment-btn"
+              (click)="proceedToPay('wallet')"
+            >
+              <i class="fas fa-wallet mr-2"></i> Pay with Wallet
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
