@@ -42,7 +42,22 @@ export class CardComponent implements OnInit {
     '11',
     '12',
   ];
-  years: string[] = ['2024', '2025', '2026', '2027', '2028', '2029', '2030'];
+  years: string[] = [
+    '2024',
+    '2025',
+    '2026',
+    '2027',
+    '2028',
+    '2029',
+    '2030',
+    '2031',
+    '2032',
+    '2033',
+    '2034',
+    '2035',
+    '2036',
+    '2037',
+  ];
 
   constructor(
     private route: ActivatedRoute,
@@ -58,11 +73,10 @@ export class CardComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.minLength(16),
-          Validators.maxLength(16),
-          Validators.pattern('^[0-9]{16}$'),
+          Validators.pattern(/^\d{4}\s?\d{4}\s?\d{4}\s?\d{4}$/),
         ],
       ],
+
       expMonth: [
         '',
         [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
@@ -116,19 +130,27 @@ export class CardComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    if (this.cardDetailsForm.invalid) {
+      return;
+    }
     if (this.cardDetailsForm.valid) {
-      // Get customer details from local storage
+      const cardNumberWithoutSpaces = this.cardDetailsForm
+        .get('cardNumber')
+        ?.value.replace(/\s+/g, '');
 
       // Combine expMonth and expYear into expiryDate
       const expiryDate = `${this.cardDetailsForm.value.expMonth}/${this.cardDetailsForm.value.expYear}`;
 
       // Prepare the card details object
       const cardDetails: CardDetails = {
-        cardNumber: this.cardDetailsForm.value.cardNumber,
+        cardNumber: cardNumberWithoutSpaces,
         cardHolderName: this.cardDetailsForm.value.cardHolderName,
         expiryDate: expiryDate,
         cvv: this.cardDetailsForm.value.cvv,
         cardType: this.cardDetailsForm.value.cardType,
+        balance: 5000,
+        expMonth: this.cardDetailsForm.value.expMonth,
+        expYear: this.cardDetailsForm.value.expMonth,
         customerId: this.customerId, // Use customer ID from local storage
       };
 
@@ -179,10 +201,6 @@ export class CardComponent implements OnInit {
         return 'fab fa-cc-jcb jcb-icon';
       case 'dinersclub':
         return 'fab fa-cc-diners-club dinersclub-icon';
-      case 'unionpay':
-        return 'fab fa-cc-unionpay unionpay-icon';
-      case 'maestro':
-        return 'fab fa-cc-maestro maestro-icon ';
       case 'rupay':
         return 'fas fa-credit-card generic-card-icon';
       default:
@@ -198,5 +216,11 @@ export class CardComponent implements OnInit {
 
   formatCardNumber(cardNumber: string): string {
     return cardNumber.replace(/(\d{4})(?=\d)/g, '$1 ');
+  }
+
+  formatCardNumberInput(event: any) {
+    const input = event.target.value.replace(/\s+/g, ''); // Remove spaces
+    event.target.value = input.replace(/(\d{4})(?=\d)/g, '$1 '); // Insert space after every 4 digits
+    console.log(event.target.value);
   }
 }

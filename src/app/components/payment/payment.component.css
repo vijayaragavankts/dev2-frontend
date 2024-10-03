@@ -79,3 +79,8 @@
   height: 3rem;
   margin: auto;
 }
+.toggle-text {
+  font-weight: 500;
+  color: rgb(84, 76, 76);
+  font-size: large;
+}

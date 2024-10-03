@@ -1,1 +1,257 @@
-<p>account works!</p>
+<div class="accounts-container">
+  <h2>Customer Details</h2>
+
+  <div *ngIf="customerData">
+    <p><strong>Customer Id: </strong> {{ customerData.customerId }}</p>
+    <p><strong>Name: </strong> {{ customerData.name }}</p>
+    <p><strong>Email: </strong> {{ customerData.email }}</p>
+    <p><strong>Phone Number: </strong> {{ customerData.phoneNumber }}</p>
+  </div>
+</div>
+<div *ngIf="loading" class="text-center my-5 spinner-container">
+  <div class="spinner"></div>
+</div>
+<div *ngIf="!loading && cards.length > 0; else noCards" class="container mt-5">
+  <h5 class="text-muted mt-3">Your Saved Cards</h5>
+  <div class="row">
+    <div
+      *ngFor="let card of cards; let i = index"
+      class="col-md-4 mb-3"
+      style="cursor: pointer"
+    >
+      <div class="card-container shadow-sm">
+        <div class="card-body">
+          <div class="card-header">
+            <div class="card">
+              <!-- <div class="chip"></div> -->
+              <img src="assets/chip.jpg" alt="" class="chip" />
+            </div>
+            <h6 class="card-title">
+              <i class="fas fa-edit" (click)="editCard(i)"></i>
+            </h6>
+          </div>
+          <div class="card-details">
+            <p class="card-number">{{ formatCardNumber(card.cardNumber) }}</p>
+            <p class="expiry-date">VALID THRU: {{ card.expiryDate }}</p>
+            <p class="card-holder">
+              <strong>{{ card.cardHolderName | uppercase }}</strong>
+            </p>
+            <p class="current-balance">
+              Current Balance: {{ card.balance | currency : "INR" }}
+            </p>
+          </div>
+          <i
+            [ngClass]="getCardIconClass(card.cardType)"
+            class="card-icon-bottom-right"
+          ></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noCards>
+  <div class="no-cards-container mt-5">
+    <h5 class="text-muted mt-3">No saved cards found.</h5>
+  </div>
+</ng-template>
+
+<!-- ======================================================================================================== -->
+
+<div
+  *ngIf="selectedCardIndex !== null"
+  class="container mt-5 d-flex align-items-center"
+>
+  <div class="card-display">
+    <div class="circle1" style="top: 20px; left: 20px"></div>
+
+    <div class="card-details-overlay">
+      <div class="card-number1">
+        {{
+          formatCardNumber(
+            cardDetailsForm.get("cardNumber")?.value || "0000 0000 0000 0000"
+          )
+        }}
+      </div>
+      <div class="card-holder-name">
+        {{
+          cardDetailsForm.get("cardHolderName")?.value || "Rohit sharma"
+            | uppercase
+        }}
+      </div>
+      <div class="expiry-date1">
+        {{ cardDetailsForm.get("expMonth")?.value || "MM" }}/{{
+          cardDetailsForm.get("expYear")?.value || "YY"
+        }}
+      </div>
+      <div class="card-type-icons">
+        <i
+          [ngClass]="getCardIconClass(cardDetailsForm.get('cardType')?.value)"
+          class="card-icon"
+        ></i>
+      </div>
+      <!-- <div class="cvc">
+        {{ cardDetailsForm.get("cvv")?.value || "123" }}
+      </div> -->
+    </div>
+  </div>
+
+  <div class="form-contain">
+    <form
+      #cardFormSection
+      [formGroup]="cardDetailsForm"
+      (ngSubmit)="onSubmit()"
+      class="form-section"
+    >
+      <div class="form-group mb-3">
+        <label for="cardType" class="form-label fw-bold">CARD TYPE:</label>
+        <select id="cardType" formControlName="cardType" class="form-control">
+          <option value="" disabled selected>Select Card Type</option>
+          <option value="visa">Visa</option>
+          <option value="mastercard">Mastercard</option>
+          <option value="amex">American Express</option>
+          <option value="discover">Discover</option>
+          <option value="jcb">JCB</option>
+          <option value="dinersclub">Diners Club</option>
+          <option value="rupay">RuPay</option>
+        </select>
+        <div
+          *ngIf="submitted && cardDetailsForm.get('cardType')?.invalid"
+          class="text-danger mt-1"
+        >
+          <small>Card type is required.</small>
+        </div>
+      </div>
+
+      <!-- Card Holder Name Input -->
+      <div class="form-group mb-3">
+        <label for="cardHolderName" class="form-label fw-bold"
+          >CARDHOLDER NAME:</label
+        >
+        <input
+          id="cardHolderName"
+          formControlName="cardHolderName"
+          type="text"
+          class="form-control"
+          placeholder="e.g. Rohit Sharma"
+        />
+        <div
+          *ngIf="submitted && cardDetailsForm.get('cardHolderName')?.invalid"
+          class="text-danger mt-1"
+        >
+          <small>Card holder name is required.</small>
+        </div>
+      </div>
+
+      <!-- Card Number Input -->
+      <div class="form-group mb-3">
+        <label for="cardNumber" class="form-label fw-bold">CARD NUMBER:</label>
+        <input
+          id="cardNumber"
+          formControlName="cardNumber"
+          type="text"
+          class="form-control"
+          placeholder="e.g. 0000 0000 0000 0000"
+          (input)="formatCardNumberInput($event)"
+          maxlength="19"
+        />
+        <div
+          *ngIf="submitted && cardDetailsForm.get('cardNumber')?.invalid"
+          class="text-danger mt-1"
+        >
+          <small>Card number must be 16 digits.</small>
+        </div>
+      </div>
+
+      <!-- Expiry Date (MM/YY) and CVC -->
+      <div class="form-group mb-3 row">
+        <div class="col-md-4">
+          <label for="expiryMonth" class="form-label fw-bold"
+            >EXP. DATE (MM):</label
+          >
+          <select
+            id="expiryMonth"
+            formControlName="expMonth"
+            class="form-control"
+          >
+            <option value="" disabled selected>MM</option>
+            <option *ngFor="let month of months" [value]="month">
+              {{ month }}
+            </option>
+          </select>
+          <div
+            *ngIf="submitted && cardDetailsForm.get('expMonth')?.invalid"
+            class="text-danger mt-1"
+          >
+            <small>Month is required.</small>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="expiryYear" class="form-label fw-bold"
+            >EXP. YEAR (YY):</label
+          >
+          <select
+            id="expiryYear"
+            formControlName="expYear"
+            class="form-control"
+          >
+            <option value="" disabled selected>YYYY</option>
+            <option *ngFor="let year of years" [value]="year">
+              {{ year }}
+            </option>
+          </select>
+          <div
+            *ngIf="submitted && cardDetailsForm.get('expYear')?.invalid"
+            class="text-danger mt-1"
+          >
+            <small>Year is required.</small>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="cvvx" class="form-label fw-bold">CVC:</label>
+          <input
+            id="cvc"
+            formControlName="cvv"
+            type="text"
+            class="form-control"
+            placeholder="e.g. 123"
+          />
+          <div
+            *ngIf="submitted && cardDetailsForm.get('cvv')?.invalid"
+            class="text-danger mt-1"
+          >
+            <small>CVC must be 3 digits.</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group mb-3">
+    <label for="addAmount" class="form-label fw-bold">ADD AMOUNT:</label>
+    <input
+      id="addAmount"
+      formControlName="addAmount"
+      type="number"
+      class="form-control"
+      placeholder="e.g. 1000.00"
+    />
+    <div
+      *ngIf="submitted && cardDetailsForm.get('addAmount')?.invalid"
+      class="text-danger mt-1"
+    >
+      <small>Add amount is required and must be a valid amount.</small>
+    </div>
+  </div>
+      <!-- Confirm Button -->
+      <div class="text-center mb-3">
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg w-100"
+          (click)="submitted = true"
+        >
+          Update Card
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

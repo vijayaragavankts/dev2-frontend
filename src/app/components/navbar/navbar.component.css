@@ -1,19 +1,26 @@
+/* Sidebar for larger screens */
 #sidebar {
-  width: 280px; /* Increased from 220px */
-  padding: 20px; /* Increased padding for larger appearance */
+  width: 280px; /* Sidebar width */
+  padding: 20px;
   background-color: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+.main-content {
+  margin-left: 280px; /* Offset the content based on sidebar width */
+  transition: margin-left 0.3s ease-in-out;
+  padding: 20px;
 }
 
 .company-name {
   font-weight: bold;
   color: #333;
   text-transform: uppercase;
-  text-align: center; /* Centering the text */
+  text-align: center;
   letter-spacing: 1px;
   font-family: "Dancing Script", cursive;
-  font-size: 46px; /* Adjust size as needed */
-  text-align: center; /* Centering the text */
-  margin: 20px 0; /* Space around the text */
+  font-size: 46px;
+  margin: 20px 0;
 }
 
 .nav-link {
@@ -21,9 +28,9 @@
   color: #333;
   padding: 12px 15px;
   margin-bottom: 10px;
-  display: flex; /* This ensures the icon and text stay in one line */
-  align-items: center; /* Aligns the icon with the text vertically */
-  white-space: nowrap; /* Prevents text from wrapping onto multiple lines */
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .nav-link.active {
@@ -36,45 +43,130 @@
 }
 
 .nav-item {
-  margin-top: 15px; /* Adjust space as needed */
+  margin-top: 15px;
 }
 
 .logout {
   position: absolute;
-  bottom: 20px; /* Space from the bottom */
+  bottom: 0;
+  left: 0;
   width: 100%;
+  padding: 10px; /* You can adjust the padding as needed */
 }
+
 .full-width {
-  width: 70%; /* Full width */
-  padding: 10px; /* Add some padding for better appearance */
+  width: 100%; /* Full width of the sidebar */
+}
+/* Mobile Navbar */
+.mobile-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 60px;
+  background-color: #007bff;
+  display: none;
 }
 
-/* Other existing styles remain the same */
+.hamburger {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+/* .mobile-navbar {
+  position: relative;
+} */
 
-/* Responsive: Collapsing Navbar for Mobile */
+.mobile-menu {
+  position: fixed; /* Makes the menu overlay on the whole screen */
+  top: 7%; /* Aligns the menu to the top */
+  left: 0; /* Aligns the menu to the left */
+  width: 100vw; /* Full width of the viewport */
+  height: 100vh; /* Full height of the viewport */
+  z-index: 1000; /* Ensures it stays on top of other elements */
+  transition: transform 0.3s ease; /* Smooth transition when toggling */
+}
+
+.mobile-menu.d-none {
+  display: none; /* Ensures the menu is hidden */
+}
+.mobile-menu .nav {
+  padding-top: 20px; /* Optional: Adds some spacing from the top */
+}
+/* .mobile-menu {
+  transition: max-height 0.3s ease; 
+  overflow: hidden; 
+  max-height: 0; 
+} */
+
+/* Class to control visibility and max-height of the mobile menu */
+.mobile-menu.open {
+  display: block; /* Show the menu when open */
+  max-height: 350px; /* Adjust this value as needed to the maximum height when fully open */
+}
+
+/* Show and hide mobile menu */
+.d-none {
+  display: none !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-flex {
+  display: flex;
+  justify-content: space-between; /* Ensures the elements are spread out */
+  align-items: center; /* Vertically centers the items */
+}
+
+.mobileContainer {
+  width: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; /* Ensures the elements are spread out */
+  align-items: center; /* Vertically centers the items */
+}
+
+.company-name {
+  margin-left: 0; /* Ensure it is aligned to the left */
+  font-weight: bold;
+  font-size: 50px;
+}
+
+.hamburger {
+  margin-right: 0; /* Aligns the button to the right */
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Additional for responsiveness */
 @media (max-width: 768px) {
+  .d-flex {
+    padding: 0 20px; /* Adds space between the edges */
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  /* Hide the desktop sidebar */
   #sidebar {
-    position: absolute;
-    width: 100%;
-    height: auto;
-    left: -100%;
-    transition: all 0.3s;
+    display: none;
   }
 
-  #sidebar.active {
-    left: 0;
-  }
-}
-
-.main-content {
-  margin-left: 220px;
-  width: calc(100% - 220px);
-  padding: 20px;
-}
-
-@media (max-width: 768px) {
+  /* Ensure the main content has no margin when sidebar is hidden */
   .main-content {
     margin-left: 0;
-    width: 100%;
+  }
+
+  /* Show the mobile navbar */
+  .mobile-navbar {
+    display: flex;
   }
 }

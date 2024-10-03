@@ -18,7 +18,6 @@ export class TransactionComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerId = localStorage.getItem('customerId') || '';
-    console.log('Hi');
     this.fetchTransactions();
   }
 
@@ -31,9 +30,8 @@ export class TransactionComponent implements OnInit {
     this.transactionService
       .getTransactionsByCustomerId(this.customerId)
       .subscribe(
-        (data) => {
+        (data: any) => {
           this.transactions = data;
-          console.log(this.transactions);
           this.loading = false;
         },
         (error) => {
@@ -41,6 +39,11 @@ export class TransactionComponent implements OnInit {
           this.loading = false;
         }
       );
+  }
+  retryPayment(bill: number) {
+    this.router.navigate(['/dashboard/payment-gateway'], {
+      queryParams: { billId: bill },
+    });
   }
   navigateToBills() {
     this.router.navigate(['/dashboard/due-bills']); // Adjust the route as necessary

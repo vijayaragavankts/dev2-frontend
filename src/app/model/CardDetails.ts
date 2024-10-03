@@ -10,5 +10,5 @@ export interface CardDetails {
   cvv: string;
   cardType: string;
   customerId: string;
-  
+  balance: number;
 }

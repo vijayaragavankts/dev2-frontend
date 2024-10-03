@@ -6,7 +6,7 @@ import { WalletDetails } from './WalletDetails';
 export interface Transaction {
   transactionId: number;
   customerId: string;
-  invoiceId: number;
+  invoice: Bill;
   amount: number;
   status: string;
   transactionDate: string; // ISO string format for LocalDateTime

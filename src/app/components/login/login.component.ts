@@ -114,9 +114,16 @@ export class LoginComponent implements OnInit, OnDestroy {
   onValidateOtp() {
     this.otpForm.get('enteredOtp')?.markAsTouched();
     this.otpErrorMessage = '';
-    if (this.otpForm.valid) {
-      const enteredOtp = this.otpForm.get('enteredOtp')?.value;
 
+    const enteredOtp = this.otpForm.get('enteredOtp')?.value;
+
+    if (enteredOtp && !/^\d{6}$/.test(enteredOtp)) {
+      this.otpErrorMessage =
+        'OTP must be exactly 6 digits and contain only numbers.';
+      return;
+    }
+
+    if (this.otpForm.valid) {
       console.log('Validation OTP :' + enteredOtp);
       this.otpService.validateOtp(enteredOtp).subscribe(
         (response) => {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CardDetails } from '../../model/CardDetails';
 
@@ -26,5 +26,17 @@ export class CardService {
     console.log(cardDetails);
 
     return this.http.post<CardDetails>(this.apiUrl, cardDetails);
+  }
+
+  addAmountToCard(cardId: number, amountToAdd: number): Observable<any> {
+    const params = new HttpParams().set('amount', amountToAdd);
+    return this.http.post<any>(`${this.apiUrl}/${cardId}/credit`, params);
+  }
+
+  updateCardDetails(
+    cardId: number,
+    cardDetails: CardDetails
+  ): Observable<CardDetails> {
+    return this.http.put<CardDetails>(`${this.apiUrl}/${cardId}`, cardDetails);
   }
 }

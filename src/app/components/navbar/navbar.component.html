@@ -1,4 +1,5 @@
-<nav id="sidebar" class="bg-light vh-100 position-fixed">
+<!-- Sidebar for larger screens -->
+<nav id="sidebar" class="bg-light vh-100 position-fixed d-md-block">
   <div class="d-flex flex-column p-3">
     <a href="/" class="text-center mb-3 fs-4 text-decoration-none">
       <span class="company-name">BBC</span>
@@ -25,10 +26,63 @@
         </a>
       </li>
     </ul>
-    <div class="mt-auto logout">
+    <div
+      class="mt-auto logout position-absolute bottom-0 start-0 w-100 p-3 d-flex justify-content-center align-items-center"
+    >
       <button (click)="confirmLogout()" class="btn btn-danger full-width">
         Logout
       </button>
     </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content">
+  <!-- Add your content here -->
+</div>
+
+<!-- Mobile Navbar (only visible on small screens) -->
+<!-- Mobile Navbar (only visible on small screens) -->
+<nav class="mobile-navbar bg-primary text-white d-md-none">
+  <div
+    class="d-flex justify-content-between align-items-center p-3 mobileContainer"
+  >
+    <span class="company-name">BBC</span>
+    <button class="hamburger" (click)="toggleMobileMenu()">☰</button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="mobile-menu bg-light text-dark"
+    [ngClass]="{ 'd-none': !isMobileMenuOpen }"
+  >
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a routerLink="/dashboard/due-bills" class="nav--link">
+          <i class="fas fa-file-invoice-dollar me-2"></i> Due Bills
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/dashboard/payment-history" class="nav--link">
+          <i class="fas fa-history me-2"></i> Payment History
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/dashboard/themes" class="nav--link">
+          <i class="fas fa-palette me-2"></i> Themes
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/dashboard/account" class="nav--link">
+          <i class="fas fa-user-circle me-2"></i> Account
+        </a>
+      </li>
+      <li class="nav-item">
+        <button (click)="confirmLogout()" class="btn btn-danger w-100">
+          Logout
+        </button>
+      </li>
+    </ul>
   </div>
 </nav>

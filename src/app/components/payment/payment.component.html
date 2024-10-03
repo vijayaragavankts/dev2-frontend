@@ -87,12 +87,18 @@
           <i class="fas fa-money-bill-alt mr-2"></i> Make a Payment
         </h5>
 
-         <form [formGroup]="paymentForm" (ngSubmit)="makePayment()">
-          <div class="form-group">
+        <p class="custom-toggle">
+          <mat-slide-toggle [(ngModel)]="isPartialPayment" color="primary">
+            <span class="toggle-text"> Pay Partial Amount</span>
+          </mat-slide-toggle>
+        </p>
+
+        <form [formGroup]="paymentForm" (ngSubmit)="makePayment()">
+          <div class="form-group" *ngIf="isPartialPayment">
             <label for="paymentAmount">Enter Amount to Pay:</label>
             <input
               type="text"
-              class="form-control mt-3 mt-2"
+              class="form-control mt-2"
               id="paymentAmount"
               formControlName="paymentAmount"
               placeholder="Enter amount"
@@ -100,10 +106,17 @@
             />
           </div>
 
+          <div *ngIf="!isPartialPayment">
+            <p>
+              <strong>Full Payment Amount:</strong>
+              {{ finalAmount | currency : "INR" }}
+            </p>
+          </div>
+
           <button
             type="submit"
             class="btn btn-primary mt-3"
-            [disabled]="paymentForm.invalid"
+            [disabled]="isPartialPayment && paymentForm.invalid"
           >
             <i class="fas fa-check-circle mr-2"></i> Pay Now
           </button>

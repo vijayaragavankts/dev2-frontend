@@ -1,0 +1,380 @@
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #343a40;
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  /* font-size: 1.1rem; */
+  /* font-weight: 600; */
+  color: #495057;
+  margin-top: 0.5rem;
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 14px;
+}
+
+input[type="text"] {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.blue-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: #5c67f2; /* Aesthetic blue shade */
+  cursor: pointer;
+}
+
+.blue-btn:hover {
+  background-color: #4a54e1; /* Slightly darker on hover */
+}
+
+.text-danger {
+  color: #e3342f;
+}
+
+.spinner-border {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.custom-breadcrumb {
+  background-color: #f8f9fa; /* Light background for the breadcrumb */
+}
+
+/* .container {
+  max-width: 500px;
+  margin: 0 auto;
+} */
+
+.form-contain {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.form-control {
+  border-radius: 8px;
+  border: 1px solid #d1d1d1;
+  padding: 10px;
+}
+
+.form-control-lg {
+  font-size: 1.25rem;
+}
+
+.btn-dark {
+  background-color: #4e1850;
+  color: white;
+}
+
+.is-invalid {
+  border-color: red;
+}
+
+/* Spinner Styles */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px; /* Adjust the height as needed */
+}
+
+.spinner {
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #ff416c; /* Customize the spinner color */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.card-container {
+  background: #1f2937;
+  color: white;
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card-body {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; */
+  position: relative;
+  padding-bottom: 10px;
+  z-index: 2;
+}
+.card-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../../../../public/assets/worldmap.jpg"); /* Add your map image here */
+  background-size: cover; /* Ensures the image covers the card container */
+  opacity: 0.15; /* Makes the background subtle */
+  z-index: 1; /* Puts the background behind the card content */
+}
+
+.card-icon-bottom-right {
+  position: absolute;
+  bottom: 10px; /* Adjust as needed for spacing */
+  right: 10px; /* Adjust as needed for spacing */
+  font-size: 48px; /* Larger size for the icon */
+  color: #000; /* Adjust color as needed */
+  opacity: 0.7; /* Optional for slight transparency */
+}
+.card-container:hover {
+  transform: scale(1.05);
+}
+
+.card-icon-bottom-right {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.card-header {
+  /* position: relative;
+  z-index: 3; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 1.2rem; /* Adjust font size */
+  margin-bottom: 10px;
+}
+
+.card-title i {
+  font-size: 2rem; /* Increase the icon size */
+  color: white; /* Default icon color */
+}
+
+/* Visa original blue color */
+.visa-icon {
+  color: #9099fc;
+}
+
+/* MasterCard original color */
+.mastercard-icon {
+  /* color: #eb001b;  */
+  background: linear-gradient(90deg, #ff5f00 50%, #f79e1b 50%);
+  border-radius: 50%;
+}
+
+/* Amex original blue color */
+.amex-icon {
+  color: #007bc1;
+}
+
+/* Discover original orange color */
+.discover-icon {
+  color: #ff7700;
+}
+
+/* JCB original color */
+.jcb-icon {
+  color: #0061aa;
+}
+
+/* Diners Club original blue color */
+.dinersclub-icon {
+  color: #00677f;
+}
+
+/* UnionPay original color */
+.unionpay-icon {
+  color: #2e8b57;
+}
+
+/* Maestro original color */
+.maestro-icon {
+  color: #cc0000;
+}
+
+/* Generic Credit Card */
+.generic-card-icon {
+  color: #555;
+}
+
+.fa-wifi {
+  transform: rotate(90deg);
+}
+
+.chip {
+  width: 50px;
+  height: 40px;
+  background-color: rgb(195, 178, 82);
+  border-radius: 5px;
+}
+
+.card-details {
+  margin-top: 20px; /* Space above details */
+}
+
+.card-number {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.5rem; /* Card number size */
+  letter-spacing: 2px; /* Space between digits */
+  margin: 10px 0; /* Margin above and below */
+}
+
+.expiry-date {
+  font-size: 0.9rem; /* Smaller font for expiry date */
+  margin: 5px 0; /* Margin above and below */
+}
+
+.card-holder {
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: 2px; /* Space between digits */
+  font-size: 1rem; /* Cardholder name size */
+  margin: 5px 0; /* Margin above and below */
+}
+.no-cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.no-cards-container:hover {
+  background-color: #f1f1f1;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.no-cards-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.5rem;
+  color: #757575;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
+}
+
+.no-cards-container h5 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.card-display {
+  width: 400px;
+  height: 220px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: url("../../../../public/assets/front.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.circle1 {
+  position: absolute;
+  width: 40px; /* Size of the circle */
+  height: 40px; /* Size of the circle */
+  border-radius: 50%; /* Makes it circular */
+  background-color: white; /* Circle color */
+  opacity: 1; /* Slight transparency for effect */
+}
+
+.circle2 {
+  position: absolute;
+  width: 20px; /* Size of the circle */
+  height: 20px; /* Size of the circle */
+  border-radius: 50%; /* Makes it circular */
+  background-color: white; /* Circle color */
+  opacity: 0.4; /* Slight transparency for effect */
+}
+.card-icon {
+  font-size: 40px;
+  position: absolute;
+  right: 10px;
+}
+.card-details-overlay {
+  position: relative;
+  height: 100%;
+  flex-direction: column; /* Stack the text elements */
+  justify-content: center; /* Center vertically within the overlay */
+  align-items: center; /* Center horizontally within the overlay */
+  width: 100%; /* Ensure full width */
+}
+
+.card-number1 {
+  position: absolute;
+  font-family: "Space Grotesk", sans-serif;
+  top: 50%;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+  margin: auto;
+  left: 10%;
+  text-align: center; /* Center text */
+  /* margin-bottom: 30px; */
+}
+
+.card-holder-name {
+  position: absolute;
+  bottom: -10%;
+  font-size: 0.8rem;
+  margin-bottom: 20px;
+}
+
+.expiry-date1,
+.cvc {
+  font-size: 0.8rem;
+}
+
+.expiry-date1 {
+  position: absolute;
+  bottom: -10%;
+  right: 0;
+  margin-bottom: 20px;
+}
+
+.cvc {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
