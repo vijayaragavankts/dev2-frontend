@@ -91,12 +91,16 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.loading = true;
       this.otpService.sendOtp(customerId).subscribe(
         (response) => {
-          console.log('OTP Sent successfully', response);
-          setTimeout(() => {
-            this.loading = false;
-            this.otpSent = true;
-            this.startCountdown();
-          }, 2000);
+          if (response.success) {
+            console.log('OTP Sent successfully', response);
+            setTimeout(() => {
+              this.loading = false;
+              this.otpSent = true;
+              this.startCountdown();
+            }, 2000);
+          } else {
+            console.log('OTP Not Sent', response);
+          }
         },
         (error) => {
           console.log('Error sending OTP', error);
@@ -127,17 +131,24 @@ export class LoginComponent implements OnInit, OnDestroy {
       console.log('Validation OTP :' + enteredOtp);
       this.otpService.validateOtp(enteredOtp).subscribe(
         (response) => {
-          console.log('OTP Validated Successfully', response);
-          const customerId = this.customerForm.get('customerId')?.value; // local storage
-          localStorage.setItem('customerId', customerId);
-          this.snackBar.open('Login Successful', 'Close', {
-            duration: 2000, // Duration of the toast in milliseconds
-          });
+          if (response.success) {
+            console.log('OTP Validated Successfully', response);
+            const customerId = this.customerForm.get('customerId')?.value; // local storage
+            localStorage.setItem('customerId', customerId);
+            this.snackBar.open('Login Successful', 'Close', {
+              duration: 2000, // Duration of the toast in milliseconds
+            });
 
-          // Navigate to home after a slight delay to allow the toast to show
-          setTimeout(() => {
-            this.router.navigate(['/dashboard/due-bills']);
-          }, 2000); // Delay in milliseconds (same as toast duration)
+            // Navigate to home after a slight delay to allow the toast to show
+            setTimeout(() => {
+              this.router.navigate(['/dashboard/due-bills']);
+            }, 2000); // Delay in milliseconds (same as toast duration)
+          } else {
+            console.log('OTP InValid', response);
+            this.snackBar.open('Incorrect Otp', 'Close', {
+              duration: 2000, // Duration of the toast in milliseconds
+            });
+          }
         },
         (error) => {
           this.otpErrorMessage = error?.error?.message || 'Invalid OTP';

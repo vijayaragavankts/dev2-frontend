@@ -16,20 +16,67 @@
         </a>
       </li>
       <li class="nav-item">
-        <a routerLink="/dashboard/themes" class="nav-link">
-          <i class="fas fa-palette me-2"></i> Themes
-        </a>
-      </li>
-      <li class="nav-item">
         <a routerLink="/dashboard/account" class="nav-link">
           <i class="fas fa-user-circle me-2"></i> Account
         </a>
       </li>
+      <!-- Expansion Panel for Theme Selection -->
+      <mat-expansion-panel class="mt-3" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="fas fa-palette me-1">
+            &nbsp; Select Theme
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <!-- Color Swatches inside Expansion Panel -->
+        <div class="theme-selection p-3 color-grid">
+          <div
+            class="color-swatch mb-2 mr-2"
+            (click)="changeTheme('red')"
+            style="background-color: red"
+          ></div>
+          <div
+            class="color-swatch mb-2 mr-2"
+            (click)="changeTheme('green')"
+            style="background-color: green"
+          ></div>
+          <div
+            class="color-swatch mb-2 mr-2"
+            (click)="changeTheme('blue')"
+            style="background-color: blue"
+          ></div>
+          <div
+            class="color-swatch mb-2 mr-2"
+            (click)="changeTheme('gray')"
+            style="background-color: gray"
+          ></div>
+          <div
+            class="color-swatch mb-2 mr-2"
+            (click)="changeTheme('black')"
+            style="background-color: black"
+          ></div>
+          <div
+            class="color-swatch mb-2 mr-2"
+            (click)="changeTheme('cyan')"
+            style="background-color: #17a2b8"
+          ></div>
+          <div
+            class="color-swatch mb-2 mr-2"
+            (click)="changeTheme('yellow')"
+            style="background-color: #ffc107"
+          ></div>
+          <div
+            class="color-swatch mb-2 mr-2"
+            (click)="changeTheme('white')"
+            style="background-color: #a903f6"
+          ></div>
+        </div>
+      </mat-expansion-panel>
     </ul>
     <div
       class="mt-auto logout position-absolute bottom-0 start-0 w-100 p-3 d-flex justify-content-center align-items-center"
     >
-      <button (click)="confirmLogout()" class="btn btn-danger full-width">
+      <button (click)="confirmLogout()" class="btn btn-primary full-width">
         Logout
       </button>
     </div>
@@ -79,7 +126,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <button (click)="confirmLogout()" class="btn btn-danger w-100">
+        <button (click)="confirmLogout()" [ngClass]="currentTheme.buttonColor">
           Logout
         </button>
       </li>

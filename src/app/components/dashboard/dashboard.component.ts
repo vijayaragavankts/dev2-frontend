@@ -11,6 +11,7 @@ import { RouterOutlet } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
   customerId: string = '';
+  
 
   ngOnInit(): void {
     this.customerId = localStorage.getItem('customerId') || '';

@@ -227,21 +227,21 @@
         </div>
       </div>
       <div class="form-group mb-3">
-    <label for="addAmount" class="form-label fw-bold">ADD AMOUNT:</label>
-    <input
-      id="addAmount"
-      formControlName="addAmount"
-      type="number"
-      class="form-control"
-      placeholder="e.g. 1000.00"
-    />
-    <div
-      *ngIf="submitted && cardDetailsForm.get('addAmount')?.invalid"
-      class="text-danger mt-1"
-    >
-      <small>Add amount is required and must be a valid amount.</small>
-    </div>
-  </div>
+        <label for="addAmount" class="form-label fw-bold">ADD AMOUNT:</label>
+        <input
+          id="addAmount"
+          formControlName="addAmount"
+          type="text"
+          class="form-control"
+          placeholder="e.g. 1000.00"
+        />
+        <div
+          *ngIf="submitted && cardDetailsForm.get('addAmount')?.invalid"
+          class="text-danger mt-1"
+        >
+          <small>Add amount is required and must be a valid amount.</small>
+        </div>
+      </div>
       <!-- Confirm Button -->
       <div class="text-center mb-3">
         <button

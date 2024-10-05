@@ -1,16 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-wallet',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink,CommonModule],
   templateUrl: './wallet.component.html',
   styleUrl: './wallet.component.css',
 })
 export class WalletComponent implements OnInit {
-  billId: number | null = null; // To store billId
-  paymentMethod: string | null = null; // To store the dynamic part (like "card")
+  billId: number | null = null;
+  paymentMethod: string | null = null;
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 

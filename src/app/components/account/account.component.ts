@@ -177,6 +177,9 @@ export class AccountComponent implements OnInit {
     }
     if (this.cardDetailsForm.valid) {
       const amountToAdd = this.cardDetailsForm.get('addAmount')?.value || 0;
+      const cardNumberWithoutSpaces = this.cardDetailsForm
+        .get('cardNumber')
+        ?.value.replace(/\s+/g, '');
 
       if (this.selectedCardIndex !== null) {
         const selectedCard = this.cards[this.selectedCardIndex];
@@ -211,11 +214,14 @@ export class AccountComponent implements OnInit {
   }
 
   updateCardDetails(cardId: number, newBalance: number) {
+    const cardNumberWithoutSpaces = this.cardDetailsForm
+      .get('cardNumber')
+      ?.value.replace(/\s+/g, '');
     // Create a CardDetails object with the updated information from the form
     const updatedCardDetails: CardDetails = {
       id: cardId, // Make sure you set the ID
       customerId: this.customerId,
-      cardNumber: this.cardDetailsForm.get('cardNumber')?.value,
+      cardNumber: cardNumberWithoutSpaces,
       cardHolderName: this.cardDetailsForm.get('cardHolderName')?.value,
       expiryDate:
         this.cardDetailsForm.get('expMonth')?.value +

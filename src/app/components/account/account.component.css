@@ -75,6 +75,14 @@ input[type="text"] {
   border-radius: 8px;
   border: 1px solid #d1d1d1;
   padding: 10px;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-width: 2.5px;
+  border-color: var(--primary-color);
+  box-shadow: none;
 }
 
 .form-control-lg {
@@ -377,4 +385,15 @@ input[type="text"] {
   position: absolute;
   bottom: 20px;
   right: 20px;
+}
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.btn-primary:focus {
+  border: none;
+  background-color: var(--primary-color);
+  outline: none; /* Remove the default browser outline */
 }

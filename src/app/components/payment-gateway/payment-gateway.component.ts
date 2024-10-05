@@ -13,13 +13,16 @@ import { CommonModule } from '@angular/common';
 })
 export class PaymentGatewayComponent implements OnInit {
   billId: number | null = null;
+  walletId: number | null = null;
   selectedBill: Bill | null = null;
   baseDiscount: number = 5; // Default discount percentage
   earlyPaymentDiscount: number = 5; // Additional early payment discount
   finalAmount: number | null = null; // Amount after discounts
   currentDate: Date = new Date(); // Current date
   dueDate: Date | null = null; // Due date
-  
+
+  customerId: string = '';
+
   constructor(
     private route: ActivatedRoute,
     private billService: BillService,
@@ -29,8 +32,9 @@ export class PaymentGatewayComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.billId = params['billId'] ? +params['billId'] : null;
-      this.fetchBillDetails();
     });
+    this.fetchBillDetails();
+    this.customerId = localStorage.getItem('customerId') || '';
   }
 
   fetchBillDetails() {
@@ -39,6 +43,7 @@ export class PaymentGatewayComponent implements OnInit {
         (bill: Bill) => {
           this.selectedBill = bill;
           this.calculateFinalAmount();
+          this.walletId = bill.customer.id;
         },
         (error) => {
           console.error('Error fetching bill details', error);
@@ -72,8 +77,17 @@ export class PaymentGatewayComponent implements OnInit {
 
   proceedToPay(method: string) {
     console.log(`Proceeding with payment method: ${method}`);
-    this.router.navigate([`/dashboard/payments/${method}`], {
-      queryParams: { billId: this.selectedBill?.invoice_id },
-    });
+    if (method == 'wallet') {
+      this.router.navigate([`/dashboard/paybill`], {
+        queryParams: {
+          billId: this.selectedBill?.invoice_id,
+          walletId: this.walletId,
+        },
+      });
+    } else {
+      this.router.navigate([`/dashboard/payments/${method}`], {
+        queryParams: { billId: this.selectedBill?.invoice_id },
+      });
+    }
   }
 }

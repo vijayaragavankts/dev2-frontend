@@ -10,21 +10,15 @@ export class OtpService {
 
   constructor(private http: HttpClient) {}
 
-  sendOtp(customerId: string): Observable<string> {
+  sendOtp(customerId: string): Observable<any> {
     const params = new HttpParams().set('customerId', customerId);
-    return this.http.post(
-      `${this.baseUrl}/validate`,
-      {},
-      { params, responseType: 'text' }
-    );
+    return this.http.post<any>(`${this.baseUrl}/validate`, {}, { params });
   }
 
-  validateOtp(enteredOtp: string): Observable<string> {
+  validateOtp(enteredOtp: string): Observable<any> {
+    console.log('Otp is :', enteredOtp);
+
     const params = new HttpParams().set('enteredOtp', enteredOtp);
-    return this.http.post(
-      `${this.baseUrl}/validateOtp`,
-      {},
-      { params, responseType: 'text' }
-    );
+    return this.http.post<any>(`${this.baseUrl}/validateOtp`, {}, { params });
   }
 }

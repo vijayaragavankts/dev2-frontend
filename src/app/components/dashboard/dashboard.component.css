@@ -1,9 +1,17 @@
 .dashboard {
   display: flex;
   flex-direction: row;
+  height: 100vh; /* Full screen height for dashboard layout */
 }
+
+.main-content {
+  flex-grow: 1;
+  overflow-y: auto; /* Ensures the content can scroll if it overflows */
+}
+
+/* Mobile view adjustment */
 @media (max-width: 768px) {
   .dashboard {
-    flex-direction: column; /* Change to column on smaller screens */
+    flex-direction: column; /* Switch to a column layout on smaller screens */
   }
 }

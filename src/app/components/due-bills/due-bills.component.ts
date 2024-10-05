@@ -1,51 +1,47 @@
 import { Component } from '@angular/core';
 import { Bill } from '../../model/Bill';
 import { BillService } from '../../service/bill/bill.service';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { ThemeService } from '../../service/theme/theme.service';
 
 @Component({
   selector: 'app-due-bills',
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './due-bills.component.html',
-  styleUrl: './due-bills.component.css',
+  styleUrls: ['./due-bills.component.css'], // Corrected to styleUrls
 })
 export class DueBillsComponent {
   customerId: string = '';
-  bills: Bill[] = [];
   unpaidBills: Bill[] = [];
   loading: boolean = true; // Loading state
   selectedBill: Bill | null = null;
+
+  constructor(
+    private billService: BillService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.customerId = localStorage.getItem('customerId') || '';
     this.fetchInvoices();
   }
 
-  constructor(private billService: BillService, private router: Router) {}
-
   fetchInvoices() {
+    this.loading = true; // Set loading state to true before fetching
     this.billService.getBills(this.customerId).subscribe(
       (data) => {
-        this.bills = data;
-        console.log(this.bills);
-        this.filterUnpaidBills();
-        this.loading = false;
+        this.unpaidBills = data.filter(
+          (bill) => bill.status === 'PENDING' || bill.status === 'PARTIALLY'
+        );
+        this.loading = false; // Set loading to false once data is fetched
       },
       (error) => {
         console.error('Error fetching invoices', error);
-        this.loading = false;
+        this.loading = false; // Set loading to false in case of error
       }
     );
-  }
-  filterUnpaidBills() {
-    // Assuming the Bill model has a 'status' property
-    this.unpaidBills = this.bills.filter(
-      (bill) => bill.status === 'PENDING' || bill.status === 'PARTIALLY'
-    );
-    console.log(this.unpaidBills); // Log unpaid bills
   }
 
   openBillDetails(bill: Bill) {

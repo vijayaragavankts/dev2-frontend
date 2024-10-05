@@ -1,4 +1,142 @@
-/* You can add global styles to this file, and also import other style files */
+/* styles.css or styles.scss */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Default theme */
+:root {
+  --primary-color: #007bff; /* Blue */
+  --secondary-color: #6c757d; /* Gray */
+  --success-color: #28a745; /* Green */
+  --danger-color: #dc3545; /* Red */
+  --warning-color: #ffc107; /* Yellow */
+  --info-color: #17a2b8; /* Cyan */
+  --light-color: #a903f6; /* Light */
+  --dark-color: #343a40; /* Dark */
+}
+
+/* Red theme */
+.red-theme {
+  --primary-color: #dc3545; /* Red */
+}
+
+/* Green theme */
+.green-theme {
+  --primary-color: #28a745; /* Green */
+}
+
+/* Blue theme */
+.blue-theme {
+  --primary-color: #007bff; /* Blue */
+}
+
+/* Gray theme */
+.gray-theme {
+  --primary-color: #6c757d; /* Gray */
+}
+
+/* Black theme */
+.black-theme {
+  --primary-color: #343a40; /* Black */
+}
+
+.cyan-theme{
+  --primary-color: #17a2b8;
+}
+
+.yellow-theme{
+  --primary-color: #ffc107;
+}
+
+.white-theme{
+  --primary-color: #a903f6;
+}
+
+/* Use the variable in your buttons */
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Define alert colors for each theme */
+.alert-primary {
+  background-color: var(--primary-color, #007bff);
+  color: white;
+}
+
+.alert-secondary {
+  background-color: var(--secondary-color, #6c757d);
+  color: white;
+}
+
+/* Similarly, for other themes */
+.red-theme .alert-secondary {
+  background-color: #dc3545; /* Red */
+  color: white;
+}
+
+.green-theme .alert-secondary {
+  background-color: #28a745; /* Green */
+  color: white;
+}
+
+.blue-theme .alert-secondary {
+  background-color: #007bff; /* Blue */
+  color: white;
+}
+
+.gray-theme .alert-secondary {
+  background-color: #6c757d; /* Gray */
+  color: white;
+}
+
+.black-theme .alert-secondary {
+  background-color: #343a40; /* Black */
+  color: white;
+}
+
+
+
+/* Default Outline Button */
+.btn-outline-secondary {
+  background-color: transparent;
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+/* Red Theme */
+.red-theme .btn-outline-secondary {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.red-theme .btn-outline-secondary:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Green Theme */
+.green-theme .btn-outline-secondary {
+  color: #28a745;
+  border-color: #28a745;
+}
+
+.green-theme .btn-outline-secondary:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+/* Blue Theme */
+.blue-theme .btn-outline-secondary {
+  color: #007bff;
+  border-color: #007bff;
+}
+
+.blue-theme .btn-outline-secondary:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Add similar styles for other themes like gray, black, etc. */

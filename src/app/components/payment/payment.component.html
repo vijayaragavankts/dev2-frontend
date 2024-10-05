@@ -71,7 +71,7 @@
         <!-- Discount Notification -->
         <div
           *ngIf="finalAmount !== null && selectedBill.status != 'PARTIALLY'"
-          class="alert alert-info"
+          class="alert alert-secondary"
         >
           <i class="fas fa-tags mr-2"></i> <strong> Discount Available!</strong>
           You have a total discount of
@@ -88,12 +88,12 @@
         </h5>
 
         <p class="custom-toggle">
-          <mat-slide-toggle [(ngModel)]="isPartialPayment" color="primary">
+          <mat-slide-toggle [(ngModel)]="isPartialPayment" color="warn">
             <span class="toggle-text"> Pay Partial Amount</span>
           </mat-slide-toggle>
         </p>
 
-        <form [formGroup]="paymentForm" (ngSubmit)="makePayment()">
+        <form [formGroup]="paymentForm" (ngSubmit)="requestOTP()">
           <div class="form-group" *ngIf="isPartialPayment">
             <label for="paymentAmount">Enter Amount to Pay:</label>
             <input
@@ -114,12 +114,40 @@
           </div>
 
           <button
+            *ngIf="!otpRequested"
             type="submit"
             class="btn btn-primary mt-3"
             [disabled]="isPartialPayment && paymentForm.invalid"
           >
             <i class="fas fa-check-circle mr-2"></i> Pay Now
           </button>
+        </form>
+
+        <div *ngIf="isLoading" class="loading-overlay text-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+
+        <form [formGroup]="otpForm">
+          <div *ngIf="otpRequested" class="mt-4">
+            <label for="otpInput">Enter OTP:</label>
+            <input
+              type="text"
+              class="form-control mt-2"
+              id="otpInput"
+              formControlName="otp"
+              placeholder="Enter OTP"
+            />
+
+            <button
+              class="btn btn-primary mt-3"
+              (click)="verifyOTP()"
+              [disabled]="otpForm.get('otp')?.invalid"
+            >
+              <i class="fas fa-lock mr-2"></i> Confirm Payment
+            </button>
+          </div>
         </form>
       </div>
     </div>

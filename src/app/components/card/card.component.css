@@ -4,18 +4,19 @@
     rgba(255, 255, 255, 1) 0%,
     rgba(255, 235, 235, 1) 100%
   );
-  border-left: 5px solid #ff5f5f;
+  border-left: 5px solid var(--primary-color);
   font-weight: 500;
 }
 
 .breadcrumb-link {
-  color: #ff5f5f;
+  color: var(--primary-color);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .breadcrumb-link:hover {
-  color: #d12d2d;
+  font-weight: 700;
+  color: var(--primary-color);
 }
 
 .breadcrumb-item.active {
@@ -115,6 +116,14 @@ input[type="text"] {
   border-radius: 8px;
   border: 1px solid #d1d1d1;
   padding: 10px;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none; /* Remove the blue outline */
+  border-width: 2.5px;
+  border-color: var(--primary-color); /* Set your desired focus border color */
+  box-shadow: none; /* Prevent any additional shadow */
 }
 
 .form-control-lg {
@@ -384,7 +393,7 @@ input[type="text"] {
 
 .card-number1 {
   position: absolute;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   top: 50%;
   font-size: 1.5rem;
   letter-spacing: 3px;
@@ -417,4 +426,14 @@ input[type="text"] {
   position: absolute;
   bottom: 20px;
   right: 20px;
+}
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.btn-primary:focus {
+  background-color: var(--primary-color);
+  outline: none; /* Remove the default browser outline */
 }

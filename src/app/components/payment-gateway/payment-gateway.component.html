@@ -43,14 +43,13 @@
 
         <!-- Discount Notification -->
         <div
-          *ngIf="finalAmount !== null && selectedBill.status != 'PARTIALLY'"
-          class="alert alert-info"
+          *ngIf="finalAmount !== null && selectedBill.status !== 'PARTIALLY'"
+          class="alert"
+          [ngClass]="'alert-secondary'"
         >
-          <i class="fas fa-tags mr-2"></i> <strong> Discount Available!</strong>
-          You have a total discount of
-          {{
-            baseDiscount
-          }}%.
+          <i class="fas fa-tags mr-2"></i>
+          <strong> Discount Available!</strong>
+          You have a total discount of {{ baseDiscount }}%.
           <br />
           <strong>Final Amount to Pay:</strong>
           {{ finalAmount | currency : "INR" }}
@@ -63,18 +62,20 @@
         <div class="row">
           <div class="col-md-6 text-center">
             <button
-              class="btn btn-primary btn-block my-3 payment-btn"
+              type="button"
+              class="btn btn-outline-secondary btn-block my-3 payment-btn w-50"
               (click)="proceedToPay('card')"
             >
-              <i class="fas fa-credit-card mr-2"></i> Pay with Card
+              Card
             </button>
           </div>
           <div class="col-md-6 text-center">
             <button
-              class="btn btn-success btn-block my-3 payment-btn"
+              type="button"
+              class="btn btn-outline-secondary btn-block my-3 payment-btn w-50"
               (click)="proceedToPay('wallet')"
             >
-              <i class="fas fa-wallet mr-2"></i> Pay with Wallet
+              Wallet
             </button>
           </div>
         </div>
