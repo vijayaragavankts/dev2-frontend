@@ -88,7 +88,11 @@
         </h5>
 
         <p class="custom-toggle">
-          <mat-slide-toggle [(ngModel)]="isPartialPayment" color="warn">
+          <mat-slide-toggle
+            [(ngModel)]="isPartialPayment"
+            color="warn"
+            [disabled]="isToggleDisabled"
+          >
             <span class="toggle-text"> Pay Partial Amount</span>
           </mat-slide-toggle>
         </p>
@@ -103,6 +107,7 @@
               formControlName="paymentAmount"
               placeholder="Enter amount"
               min="1"
+              [readonly]="isInputDisabled"
             />
           </div>
 
@@ -117,7 +122,9 @@
             *ngIf="!otpRequested"
             type="submit"
             class="btn btn-primary mt-3"
-            [disabled]="isPartialPayment && paymentForm.invalid"
+            [disabled]="
+              (isPartialPayment && paymentForm.invalid) || isOtpSendDisabled
+            "
           >
             <i class="fas fa-check-circle mr-2"></i> Pay Now
           </button>
@@ -143,7 +150,9 @@
             <button
               class="btn btn-primary mt-3"
               (click)="verifyOTP()"
-              [disabled]="otpForm.get('otp')?.invalid"
+              [disabled]="
+                otpForm.get('otp')?.invalid || isConfirmButtonDisabled
+              "
             >
               <i class="fas fa-lock mr-2"></i> Confirm Payment
             </button>

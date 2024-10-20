@@ -1,5 +1,120 @@
-<div class="container my-5">
+<div class="container my-5 no-select">
   <div class="row justify-content-center">
+    <div class="col-12 mb-4 d-flex justify-content-center search">
+      <div class="w-75 mb-2">
+        <input
+          type="text"
+          class="form-control custom-search"
+          placeholder="Search by Transaction ID or Amount"
+          [(ngModel)]="searchQuery"
+          (input)="applyFilters()"
+        />
+      </div>
+    </div>
+
+    <!-- Filter Controls -->
+    <div class="col-12 mb-5 d-flex justify-content-between align-items-center">
+      <!-- Filter by Status -->
+      <div class="w-25">
+        <div class="custom-dropdown">
+          <div class="dropdown-header" (click)="toggleDropdown('status')">
+            {{ selectedStatus || "All Status" }}
+            <span *ngIf="!showStatusDropdown" class="dropdown-arrow">
+              <i class="fas fa-angle-down"></i>&nbsp;
+            </span>
+            <span *ngIf="showStatusDropdown" class="dropdown-arrow">
+              <i class="fas fa-angle-up"></i>&nbsp;
+            </span>
+          </div>
+          <div class="dropdown-list" *ngIf="showStatusDropdown">
+            <div
+              class="dropdown-item"
+              *ngFor="let status of statuses"
+              (click)="selectStatus(status)"
+            >
+              {{ status }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter by Payment Method -->
+      <div class="w-25">
+        <div class="custom-dropdown">
+          <div class="dropdown-header" (click)="toggleDropdown('payment')">
+            {{ selectedPaymentMethod || "All Payment Methods" }}
+            <span *ngIf="!showPaymentMethodDropdown" class="dropdown-arrow">
+              <i class="fas fa-angle-down"></i>&nbsp;
+            </span>
+            <span *ngIf="showPaymentMethodDropdown" class="dropdown-arrow">
+              <i class="fas fa-angle-up"></i>&nbsp;
+            </span>
+          </div>
+          <div class="dropdown-list" *ngIf="showPaymentMethodDropdown">
+            <div
+              class="dropdown-item"
+              *ngFor="let method of paymentMethods"
+              (click)="selectPaymentMethod(method)"
+            >
+              {{ method }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- =================================================================== -->
+      <!-- Date Sorting Dropdown -->
+      <div class="w-25">
+        <div class="custom-dropdown">
+          <!-- Dropdown Header for Sort by Date -->
+          <div class="dropdown-header" (click)="toggleDropdown('date')">
+            {{ sortDateOrder || "Sort by Date" }}
+
+            <!-- Icon to indicate dropdown state (up/down) -->
+            <span *ngIf="!showDateDropdown" class="dropdown-arrow">
+              <i class="fas fa-angle-down"></i>&nbsp;
+            </span>
+            <span *ngIf="showDateDropdown" class="dropdown-arrow">
+              <i class="fas fa-angle-up"></i>&nbsp;
+            </span>
+          </div>
+
+          <!-- Dropdown List for Date Sorting Options -->
+          <div class="dropdown-list" *ngIf="showDateDropdown">
+            <div
+              class="dropdown-item"
+              *ngFor="let option of sortOptions"
+              (click)="selectSortDateOrder(option)"
+            >
+              {{ option }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sort by Amount -->
+      <div class="w-25">
+        <div class="custom-dropdown">
+          <div class="dropdown-header" (click)="toggleDropdown('sort')">
+            {{ sortOrder === "asc" ? "Low to High" : "High to Low" }}
+            <span *ngIf="!showSortDropdown" class="dropdown-arrow">
+              <i class="fas fa-angle-down"></i>&nbsp;
+            </span>
+            <span *ngIf="showSortDropdown" class="dropdown-arrow">
+              <i class="fas fa-angle-up"></i>&nbsp;
+            </span>
+          </div>
+          <div class="dropdown-list" *ngIf="showSortDropdown">
+            <div class="dropdown-item" (click)="selectSortOrder('asc')">
+              Low to High
+            </div>
+            <div class="dropdown-item" (click)="selectSortOrder('desc')">
+              High to Low
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <ng-container *ngIf="loading; else transactionList">
       <div class="loader-container">
         <div class="spinner"></div>
@@ -8,140 +123,126 @@
 
     <ng-template #transactionList>
       <ng-container *ngIf="transactions.length > 0; else noTransactionTemplate">
-        <div
-          class="col-md-6 col-lg-4 mb-4"
-          *ngFor="let transaction of transactions"
-        >
-          <div class="card shadow border-0 h-100 position-relative">
-            <!-- <div
-              class="transaction-status"
-              [ngClass]="{
-                'status-partial': transaction.invoice_status === 'PARTIAL',
-                'status-full': transaction.invoice_status === 'FULL',
-                'status-failed': transaction.invoice_status === 'FAILED'
-              }"
-            >
-              {{
-                transaction.invoice_status === "PARTIAL"
-                  ? "Partial"
-                  : transaction.invoice_status === "FULL"
-                  ? "Full"
-                  : "Failed"
-              }}
-            </div> -->
-
-            <!-- Success and Error Icons -->
-            <div class="position-absolute" style="top: 10px; right: 10px">
-              <ng-container *ngIf="transaction.invoice_status === 'FULL'">
-                <i
-                  class="fas fa-check-circle"
-                  style="color: #28a745; font-size: 30px"
-                ></i>
-              </ng-container>
-              <ng-container *ngIf="transaction.invoice_status === 'FAILED'">
-                <i
-                  class="fas fa-times-circle"
-                  style="color: #dc3545; font-size: 30px"
-                ></i>
-              </ng-container>
-              <ng-container *ngIf="transaction.invoice_status === 'PARTIAL'">
-                <i
-                  class="fas fa-adjust"
-                  style="color: #4d82d2; font-size: 30px"
-                ></i>
-                <!-- <i
-                  class="fas fa-hourglass-half"
-                  
-                ></i> -->
-                <!-- Icon for partially paid -->
-              </ng-container>
-            </div>
-
-            <div class="card-header bg-gradient-primary text-light text-center">
-              <h4 class="card-title mb-0">
-                Transaction #{{ transaction.transactionId }}
-              </h4>
-            </div>
-
-            <div class="card-body p-4">
-              <div class="d-flex justify-content-between mb-3">
-                <span class="label">Total Amount Paid:</span>
-                <span class="value">{{
-                  transaction.amount == null
-                    ? 0
-                    : (transaction.amount | currency : "INR")
-                }}</span>
-              </div>
-
-              <div class="d-flex justify-content-between mb-3">
-                <span class="label">Payment Method Used:</span>
-                <span class="value">
-                  <span
-                    *ngIf="transaction.paymentMethod === 'cash'"
-                    class="cash-icon"
-                    >💵</span
+        <div class="row">
+          <div
+            class="col-12 mb-4"
+            *ngFor="let transaction of transactions; let i = index"
+          >
+            <div class="card shadow border-0 mb-3">
+              <div
+                class="card-header d-flex justify-content-between align-items-center bg-light"
+              >
+                <div class="d-flex align-items-center">
+                  <ng-container
+                    *ngIf="transaction.status === 'SUCCESS'; else errorTemplate"
                   >
-                  <span
-                    *ngIf="transaction.paymentMethod === 'card'"
-                    class="card-icon"
-                    >💳</span
-                  >
-                  <span
-                    *ngIf="transaction.paymentMethod === 'wallet'"
-                    class="wallet-icon"
-                    >💰</span
-                  >
-                  {{ transaction.paymentMethod.toUpperCase() }}
+                    <i
+                      class="fas fa-check-circle text-success"
+                      style="font-size: 24px"
+                    ></i>
+                    <span class="text-success font-weight-bold ml-2"
+                      >&nbsp;Payment Successful</span
+                    >
+                  </ng-container>
+                  <ng-template #errorTemplate>
+                    <i
+                      class="fas fa-times-circle text-danger"
+                      style="font-size: 24px"
+                    ></i>
+                    <span class="text-danger font-weight-bold ml-2"
+                      >&nbsp;Payment Failed</span
+                    >
+                  </ng-template>
+                </div>
+                <span class="font-weight-bold text-primary">
+                  {{ transaction.amount | currency : "INR" }}
                 </span>
               </div>
-
-              <div class="d-flex justify-content-between mb-3">
-                <span class="label">Paid On:</span>
-                <span class="value">{{
-                  transaction.transactionDate | date : "MMM d, y, h:mm a"
-                }}</span>
-              </div>
-
-              <div class="d-flex justify-content-between mb-3">
-                <span class="label">Bill Id:</span>
-                <span class="value">#{{ transaction.invoice.invoice_id }}</span>
-              </div>
-            </div>
-
-            <div
-              *ngIf="
-                transaction.status !== 'SUCCESS' &&
-                transaction.status !== 'FAILED'
-              "
-              class="d-flex justify-content-between mb-3"
-            >
-              <span class="label">Current Status:</span>
-              <span class="value text-capitalize">
-                {{ transaction.status }}
-              </span>
-            </div>
-
-            <div class="card-footer bg-white text-center py-3">
-              <button
-                class="btn btn-primary w-75"
-                [disabled]="transaction.status !== 'FAILED'"
-                [ngClass]="{
-                  'btn-secondary': transaction.status === 'SUCCESS',
-                  'btn-dark': transaction.status === 'FAILED'
-                }"
-                style="
-                  border-radius: 25px;
-                  font-weight: 600;
-                  padding: 10px 20px;
-                "
-                (click)="retryPayment(transaction.invoice.invoice_id)"
+              <div
+                class="card-body"
+                (click)="toggleTransaction(i)"
+                style="cursor: pointer"
               >
-                {{
-                  transaction.status === "FAILED"
-                    ? "Retry Payment"
-                    : "Payment Successful"
-                }}
-              </button>
+                <h5 class="card-title">
+                  Transaction #{{ transaction.transactionId }}
+                </h5>
+                <div class="d-flex justify-content-between">
+                  <span
+                    >Transaction Date:
+                    {{
+                      transaction.transactionDate | date : "MMM d, y, h:mm a"
+                    }}</span
+                  >
+                  <span>
+                    <i
+                      class="fas"
+                      [ngClass]="
+                        isTransactionOpen(i)
+                          ? 'fa-chevron-up'
+                          : 'fa-chevron-down'
+                      "
+                      style="font-size: 20px"
+                    ></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="collapse" [ngClass]="{ show: isTransactionOpen(i) }">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <p class="font-weight-bold">Payment Method:</p>
+                      <span>
+                        <span
+                          *ngIf="transaction.paymentMethod === 'cash'"
+                          class="cash-icon"
+                          >💵</span
+                        >
+                        <span
+                          *ngIf="transaction.paymentMethod === 'card'"
+                          class="card-icon"
+                          >💳</span
+                        >
+                        <span
+                          *ngIf="transaction.paymentMethod === 'wallet'"
+                          class="wallet-icon"
+                          >💰</span
+                        >
+                        {{ transaction.paymentMethod.toUpperCase() }}
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="font-weight-bold">Invoice Details:</p>
+                      <span
+                        >Invoice ID: #{{ transaction.invoice.invoice_id }}</span
+                      ><br />
+                      <span
+                        >Invoice Status: {{ transaction.invoice_status }}</span
+                      ><br />
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row">
+                    <div class="col-12">
+                      <p class="font-weight-bold">Additional Information:</p>
+                      <span>Transaction Status: {{ transaction.status }}</span
+                      ><br />
+
+                      <span
+                        >Transaction Date:
+                        {{ transaction.transactionDate || "N/A" }}</span
+                      ><br />
+                    </div>
+                    <button
+                      *ngIf="transaction.status === 'SUCCESS'"
+                      class="btn btn-primary"
+                      (click)="downloadPdf(transaction)"
+                    >
+                      Download
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

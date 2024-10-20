@@ -32,10 +32,10 @@
 <!-- Check if cards are available -->
 <div *ngIf="!loading && cards.length > 0; else noCards" class="container mt-5">
   <h5 class="text-muted mt-3">Your Saved Cards</h5>
-  <div class="row">
+  <div class="cards-container">
     <div
       *ngFor="let card of cards"
-      class="col-md-4 mb-3"
+      class="card-wrapper"
       (click)="navigateToPayment(card.id)"
       style="cursor: pointer"
     >
@@ -75,9 +75,11 @@
   </div>
 </ng-template>
 
+<!-- =============================================================================================== -->
+
 <!-- Card Details Form -->
 <h5 class="text-muted mt-5">Add New Credit/Debit Card</h5>
-<div class="container mt-5 d-flex align-items-center">
+<div class="new-container mt-5 align-items-center">
   <div class="card-display">
     <div class="circle1" style="top: 20px; left: 20px"></div>
 
@@ -112,7 +114,7 @@
     </div>
   </div>
 
-  <div class="form-contain">
+  <div class="form-contain mt-4 mb-md-0">
     <form
       [formGroup]="cardDetailsForm"
       (ngSubmit)="onSubmit()"

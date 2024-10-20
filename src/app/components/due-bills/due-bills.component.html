@@ -1,14 +1,82 @@
-<div class="container my-5">
+<div class="container my-5 no-select">
   <div class="row justify-content-center">
-    <!-- Show loader while fetching data -->
+
+    <div class="col-12 mb-4 d-flex justify-content-center search">
+      <div class="w-75 mb-2">
+        <input
+          type="text"
+          class="form-control custom-search"
+          placeholder="Search by Invoice ID or Amount"
+          [(ngModel)]="searchQuery"
+          (input)="applyFilters()"
+        />
+      </div>
+    </div>
+
+    <!-- <div class="col-12 mb-5 d-flex justify-content-between align-items-center">
+
+      <div class="w-25">
+        <div class="custom-dropdown">
+          <div class="dropdown-header" (click)="toggleDropdown('status')">
+            {{ selectedStatus || "All Status" }}
+            <span *ngIf="!showStatusDropdown" class="dropdown-arrow">
+              <i class="fas fa-angle-down"></i>&nbsp;
+            </span>
+            <span *ngIf="showStatusDropdown" class="dropdown-arrow">
+              <i class="fas fa-angle-up"></i>&nbsp;
+            </span>
+          </div>
+          <div class="dropdown-list" *ngIf="showStatusDropdown">
+            <div
+              class="dropdown-item"
+              *ngFor="let status of statuses"
+              (click)="selectStatus(status)"
+            >
+              {{ status }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="w-25">
+        <div class="custom-dropdown">
+          <div class="dropdown-header" (click)="toggleDropdown('sort')">
+            {{
+              sortOrder === "asc"
+                ? "Amount: Low to High"
+                : "Amount: High to Low"
+            }}
+            <span *ngIf="!showSortDropdown" class="dropdown-arrow">
+              <i class="fas fa-angle-down"></i>&nbsp;
+            </span>
+            <span *ngIf="showSortDropdown" class="dropdown-arrow">
+              <i class="fas fa-angle-up"></i>&nbsp;
+            </span>
+          </div>
+          <div class="dropdown-list" *ngIf="showSortDropdown">
+            <div class="dropdown-item" (click)="selectSortOrder('asc')">
+              Low to High
+            </div>
+            <div class="dropdown-item" (click)="selectSortOrder('desc')">
+              High to Low
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+
     <ng-container *ngIf="loading; else billsTemplate">
       <div class="loader-container">
         <div class="spinner"></div>
       </div>
     </ng-container>
+
+
     <ng-template #billsTemplate>
-      <ng-container *ngIf="unpaidBills.length > 0; else noBillsTemplate">
-        <div class="col-auto mb-4" *ngFor="let bill of unpaidBills">
+      <ng-container *ngIf="filteredBills.length > 0; else noBillsTemplate">
+        <div class="col-auto mb-4 mt-3" *ngFor="let bill of filteredBills">
           <div class="card custom-card">
             <div class="card-header bg-gradient-primary text-light text-center">
               <h4 class="card-title mb-0">
@@ -54,6 +122,7 @@
         </div>
       </ng-container>
     </ng-template>
+
 
     <ng-template #noBillsTemplate>
       <div class="col-12 text-center">

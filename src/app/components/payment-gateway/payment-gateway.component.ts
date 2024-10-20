@@ -57,8 +57,9 @@ export class PaymentGatewayComponent implements OnInit {
       const baseAmount = this.selectedBill.amount;
       const currentDate = new Date();
       const dueDate = new Date(this.selectedBill.due_date);
+      console.log(this.selectedBill);
 
-      if (this.selectedBill.status === 'partially') {
+      if (this.selectedBill.status === 'PARTIALLY') {
         this.finalAmount = baseAmount;
       } else {
         // Calculate total discount

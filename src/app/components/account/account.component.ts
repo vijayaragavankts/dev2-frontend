@@ -12,6 +12,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { WalletService } from '../../service/wallet/wallet.service';
+import { WalletDetails } from '../../model/WalletDetails';
 
 @Component({
   selector: 'app-account',
@@ -23,14 +25,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AccountComponent implements OnInit {
   @ViewChild('cardFormSection') cardFormSection!: ElementRef;
   customerId: string = '';
+  walletId: number | null = null;
   customerData: Customer | null = null;
   cardDetailsForm: FormGroup;
   submitted = false;
   paymentMethod: string | null = null;
   cards: CardDetails[] = [];
+  walletDetails: WalletDetails | null = null;
   loading: boolean = false;
-
   selectedCardIndex: number | null = null;
+
+  amountForm: FormGroup;
+  submittedCredit = false;
+
+  amount: number = 0; // Model to hold amount from input
 
   months: string[] = [
     '01',
@@ -67,7 +75,8 @@ export class AccountComponent implements OnInit {
     private customerService: CustomerService,
     private cardService: CardService,
     private fb: FormBuilder,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private walletService: WalletService
   ) {
     this.cardDetailsForm = this.fb.group({
       cardType: ['', Validators.required],
@@ -99,6 +108,16 @@ export class AccountComponent implements OnInit {
       ],
       balance: ['', [Validators.required]],
       addAmount: ['', [Validators.min(1)]],
+    });
+    this.amountForm = this.fb.group({
+      amount: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[0-9]+$/), // Allows only digits
+          Validators.min(1), // Value must be greater than 0
+        ],
+      ],
     });
   }
 
@@ -148,7 +167,9 @@ export class AccountComponent implements OnInit {
     this.customerService.getCustomer(this.customerId).subscribe({
       next: (data: Customer) => {
         this.customerData = data;
+        this.walletId = data.id;
         console.log(data);
+        this.fetchWalletDetails();
       },
       error: (err) => {
         console.error('Error fetching customer data:', err);
@@ -166,6 +187,60 @@ export class AccountComponent implements OnInit {
       (error) => {
         console.error('Error fetching cards:', error);
         this.loading = false;
+      }
+    );
+  }
+
+  fetchWalletDetails() {
+    if (this.walletId !== null) {
+      this.walletService.getWalletDetails(this.walletId).subscribe(
+        (data: WalletDetails) => {
+          this.walletDetails = data;
+          console.log(this.walletDetails);
+        },
+        (error) => {
+          console.error('Error fetching wallet details:', error);
+        }
+      );
+    }
+  }
+
+  onCreditSubmit() {
+    this.submittedCredit = true;
+
+    if (this.amountForm.valid) {
+      const amount = this.amountForm.get('amount')?.value;
+      // Call your service here to credit the wallet
+      this.creditWallet(amount);
+    }
+  }
+
+  creditWallet(amount: number): void {
+    if (this.amountForm.invalid) {
+      // If the form is invalid, do not proceed
+      this.submittedCredit = true; // Set this to show validation errors
+      return;
+    }
+    this.walletService.creditWallet(this.customerId, amount).subscribe(
+      (response) => {
+        if (response.success) {
+          this.snackbar.open('Amount Added to wallet Successfully', 'Close', {
+            duration: 4000, // Duration of the toast in milliseconds
+          });
+          this.amountForm.reset();
+          this.submittedCredit = false;
+          this.fetchWalletDetails();
+        } else {
+          this.snackbar.open('Amount not added to the wallet :(', 'Close', {
+            duration: 2000, // Duration of the toast in milliseconds
+          });
+        }
+      },
+      (error) => {
+        console.error('Error crediting wallet:', error);
+        this.snackbar.open('Error adding amount to the wallet', 'Close', {
+          duration: 2000, // Duration of the toast in milliseconds
+        });
       }
     );
   }

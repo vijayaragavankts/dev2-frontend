@@ -1,23 +1,28 @@
-<div class="accounts-container">
-  <h2>Customer Details</h2>
+<div class="container accounts-container">
+  <!-- <h2 class="text-muted">Customer Details</h2> -->
 
-  <div *ngIf="customerData">
-    <p><strong>Customer Id: </strong> {{ customerData.customerId }}</p>
-    <p><strong>Name: </strong> {{ customerData.name }}</p>
-    <p><strong>Email: </strong> {{ customerData.email }}</p>
-    <p><strong>Phone Number: </strong> {{ customerData.phoneNumber }}</p>
+  <div *ngIf="customerData" class="profile-card">
+    <div class="avatar">
+      <i class="fas fa-user fa-2x"></i>
+    </div>
+    <div class="profile-info">
+      <p><strong>Customer Id:</strong> {{ customerData.customerId }}</p>
+      <p><strong>Name:</strong> {{ customerData.name }}</p>
+      <p><strong>Email:</strong> {{ customerData.email }}</p>
+      <p><strong>Phone Number:</strong> {{ customerData.phoneNumber }}</p>
+    </div>
   </div>
 </div>
+
 <div *ngIf="loading" class="text-center my-5 spinner-container">
   <div class="spinner"></div>
 </div>
 <div *ngIf="!loading && cards.length > 0; else noCards" class="container mt-5">
   <h5 class="text-muted mt-3">Your Saved Cards</h5>
-  <div class="row">
+  <div class="row1">
     <div
       *ngFor="let card of cards; let i = index"
-      class="col-md-4 mb-3"
-      style="cursor: pointer"
+      class="col-md-4 mb-3 card-wrapper"
     >
       <div class="card-container shadow-sm">
         <div class="card-body">
@@ -37,7 +42,7 @@
               <strong>{{ card.cardHolderName | uppercase }}</strong>
             </p>
             <p class="current-balance">
-              Current Balance: {{ card.balance | currency : "INR" }}
+              Balance: {{ card.balance | currency : "INR" }}
             </p>
           </div>
           <i
@@ -58,9 +63,66 @@
 
 <!-- ======================================================================================================== -->
 
+<!-- Wallet Set Balance -->
+<div class="container wallet-container mt-5">
+  <div class="wallet-card shadow-lg p-4">
+    <h5 class="text-muted">Your Wallet</h5>
+    <h6 class="current-balance">
+      Current Balance:
+      <span class="balance-amount">{{
+        walletDetails?.balance | currency : "USD"
+      }}</span>
+    </h6>
+
+    <!-- Add Balance Form -->
+    <form [formGroup]="amountForm" (ngSubmit)="onCreditSubmit()">
+      <div class="form-group mt-4">
+        <label for="amount" class="add-balance-label">Add Balance</label>
+        <input
+          type="text"
+          class="form-control amount-input"
+          id="amount"
+          formControlName="amount"
+          placeholder="Enter amount"
+        />
+
+        <!-- Error Message for Invalid Input -->
+        <!-- Error Message for Invalid Input -->
+        <div
+          *ngIf="
+            amountForm.get('amount')?.invalid &&
+            (amountForm.get('amount')?.touched || submittedCredit)
+          "
+          class="text-danger mt-2"
+        >
+          <small *ngIf="amountForm.get('amount')?.errors?.['required']"
+            >Amount is required.</small
+          >
+          <small *ngIf="amountForm.get('amount')?.errors?.['pattern']"
+            >Amount must be a valid number.</small
+          >
+          <small *ngIf="amountForm.get('amount')?.errors?.['min']"
+            >Amount must be greater than 0.</small
+          >
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-credit mt-3"
+        [disabled]="amountForm.invalid"
+      >
+        💳 Credit Amount
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ======================================================================================================== -->
+
 <div
   *ngIf="selectedCardIndex !== null"
-  class="container mt-5 d-flex align-items-center"
+  class="new-container mt-5 d-flex align-items-center"
 >
   <div class="card-display">
     <div class="circle1" style="top: 20px; left: 20px"></div>
@@ -96,7 +158,7 @@
     </div>
   </div>
 
-  <div class="form-contain">
+  <div class="form-contain mt-4 mb-md-0">
     <form
       #cardFormSection
       [formGroup]="cardDetailsForm"

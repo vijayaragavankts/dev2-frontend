@@ -13,4 +13,9 @@ export class WalletService {
   getWalletDetails(walletId: number): Observable<WalletDetails> {
     return this.http.get<WalletDetails>(`${this.apiUrl}/${walletId}`);
   }
+
+  creditWallet(customerId: string, amount: number): Observable<any> {
+    const url = `${this.apiUrl}/credit/${customerId}/${amount}`;
+    return this.http.post<any>(url, null); // No need for pipe() here
+  }
 }

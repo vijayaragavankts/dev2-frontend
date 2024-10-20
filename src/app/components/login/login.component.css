@@ -1,65 +1,66 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+}
+
 .container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #f4f4f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1200px; /* Limit max width */
+  margin: 0 auto; /* Center container */
 }
 
-/* h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-} */
+.row {
+  display: flex;
+  align-items: center; /* Center items vertically */
+}
+
+.image-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-section img {
+  width: 100%; /* Make image responsive */
+  height: auto; /* Maintain aspect ratio */
+  max-height: 500px; /* Limit height */
+  border-radius: 10px; /* Rounded corners */
+}
+
+.form-section {
+  padding: 20px; /* Padding inside form section */
+}
+
+.form-container {
+  background: white; /* Background of the form */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
+  padding: 30px; /* Padding inside the container */
+}
+
 h2 {
-  font-size: 2rem; /* Larger font size for the header */
-  font-weight: bold; /* Bold font weight */
-  color: #343a40; /* Dark color for better contrast */
-  margin-bottom: 1.5rem; /* Space below the header */
-}
-.form-label {
-  font-size: 1.1rem; /* Slightly larger font for labels */
-  font-weight: 600; /* Semi-bold font weight for labels */
-  color: #495057; /* Soft dark color */
-  margin-top: 0.5rem; /* Space above the labels */
-  display: block; /* Ensure labels take full width */
-}
-genre {
-  color: #666;
-  font-weight: bold;
+  font-family: "Poppins", sans-serif; /* Use Google Font */
+  color: #5c67f2; /* Title color */
+  margin-bottom: 20px; /* Space below title */
 }
 
-input[type="text"] {
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 10px;
+input[type="text"]:focus {
+  border-color: #5c67f2; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(92, 103, 242, 0.5); /* Glow effect */
 }
 
-.blue-btn {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  color: white;
-  background-color: #5c67f2; /* Aesthetic blue shade */
-  cursor: pointer;
+.btn {
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.blue-btn:hover {
-  background-color: #4a54e1; /* Slightly darker on hover */
-}
-
-.text-danger {
-  color: #e3342f;
+.btn:hover {
+  transform: translateY(-2px); /* Lift effect */
 }
 
 .spinner-border {
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
+  width: 30px; /* Spinner size */
+  height: 30px; /* Spinner size */
+  border-width: 3px; /* Thicker spinner */
 }

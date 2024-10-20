@@ -194,6 +194,10 @@
   color: white;
   border: none;
 }
+.btn-primary:focus {
+  background-color: var(--primary-color);
+  outline: none; /* Remove the default browser outline */
+}
 .mat-panel-title {
   user-select: none; /* Prevent text selection */
   -webkit-user-select: none; /* For Safari */

@@ -162,13 +162,13 @@ input[type="text"] {
   opacity: 0.7; /* Optional for slight transparency */
 }
 .card-container:hover {
-  transform: scale(1.05);
+  transform: scale(1);
 }
 
 .card-icon-bottom-right {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 10%;
+  right: 5%;
 }
 
 .card-header {
@@ -180,8 +180,9 @@ input[type="text"] {
 }
 
 .card-title {
-  font-size: 1.2rem; /* Adjust font size */
+  font-size: 10px; /* Adjust font size */
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .card-title i {
@@ -302,6 +303,39 @@ input[type="text"] {
   margin: 0;
 }
 
+.row1 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between cards */
+  justify-content: center; /* Center cards in the container */
+}
+
+.card-wrapper {
+  flex: 1 1 calc(33.33% - 20px); /* Default: 3 cards per row */
+  min-width: 330px; /* Minimum width for cards */
+  max-width: 400px; /* Set maximum width for cards */
+  min-height: 200px; /* Fixed height for all cards */
+  display: flex; /* Use flexbox for the card content */
+  flex-direction: column; /* Stack contents vertically */
+  justify-content: space-between; /* Distribute space evenly */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .card-wrapper {
+    flex: 1 1 calc(50% - 20px); /* 2 cards per row for medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .card-wrapper {
+    flex: 1 1 100%; /* 1 card per row for small screens */
+    height: auto; /* Allow cards to have auto height */
+    max-width: none; /* Remove max width for small screens */
+  }
+}
+
+/* ============================================================================================================= */
 .card-display {
   width: 400px;
   height: 220px;
@@ -396,4 +430,216 @@ input[type="text"] {
   border: none;
   background-color: var(--primary-color);
   outline: none; /* Remove the default browser outline */
+}
+/* .accounts-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  font-family: "Poppins", sans-serif;
+  transition: box-shadow 0.3s ease-in-out;
+} */
+.accounts-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+  font-family: "poppins", "sans-serif";
+  background: linear-gradient(135deg, #f3f4f6, #e3e6eb);
+}
+
+h2 {
+  text-align: center;
+  color: #3b3f5c; /* Muted dark color */
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Profile Card Design */
+.profile-card {
+  background-color: white;
+  border-radius: 15px; /* Consistent border radius */
+  padding: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-wrap: wrap;
+}
+
+.profile-card:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+}
+
+/* Avatar Style */
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    #ff7e5f,
+    #feb47b
+  ); /* Bright gradient for avatar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  margin-right: 20px;
+}
+
+.avatar i {
+  font-size: 40px;
+  color: #ffffff; /* White icon for contrast */
+}
+
+/* Profile Info Style */
+.profile-info {
+  flex-grow: 1;
+}
+
+.profile-info p {
+  font-size: 16px; /* Adjustefor a cleaner look */
+  color: #495057; /* Dark gray text color */
+  margin: 8px 0; /* Reduced margin for a cod mpact design */
+  font-weight: 500;
+}
+
+.profile-info strong {
+  color: var(--primary-color); /* Use primary color for labels */
+  font-weight: 600; /* Stronger emphasis */
+}
+
+.new-container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically by default */
+}
+
+/* Flex-direction for larger screens */
+/* For Mobile Devices (Portrait) */
+@media (max-width: 767px) {
+  .new-container {
+    flex-direction: column; /* Stack vertically */
+  }
+  .card-display {
+    width: 360px;
+    height: 220px;
+    left: -20px;
+  }
+  .profile-card {
+    width: 300px;
+  }
+}
+
+/* For Tablets (Landscape) and Small Desktops */
+@media (min-width: 768px) and (max-width: 1049px) {
+  .new-container {
+    flex-direction: column; /* Still stack vertically */
+  }
+}
+
+/* For Larger Screens (Desktops) */
+@media (min-width: 1250px) {
+  .new-container {
+    flex-direction: row; /* Align horizontally */
+  }
+}
+/* ================================================================================================================== */
+
+/* General Container Styling */
+.wallet-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  background: linear-gradient(135deg, #f3f4f6, #e3e6eb);
+}
+
+/* Wallet Card Design */
+.wallet-card {
+  background-color: white;
+  border-radius: 15px;
+  max-width: 450px;
+  width: 100%;
+  padding: 25px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.wallet-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Typography */
+h5 {
+  font-weight: 600;
+  color: #495057;
+}
+
+.current-balance {
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin-top: 15px;
+  color: #6c757d;
+}
+
+.balance-amount {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: var(--primary-color);
+}
+
+/* Input Field Design */
+.amount-input {
+  height: 45px;
+  border-radius: 10px;
+  border: 1px solid #ced4da;
+  padding: 0 15px;
+  font-size: 1rem;
+  transition: border 0.3s ease-in-out;
+}
+
+.amount-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+/* Button Styling */
+.btn-credit {
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 600;
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 10px;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.btn-credit:hover {
+  background-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/* Success and Error Messages */
+.alert {
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 0.9rem;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
 }

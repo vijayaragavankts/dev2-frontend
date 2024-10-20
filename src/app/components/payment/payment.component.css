@@ -144,3 +144,9 @@
   width: 3rem;
   height: 3rem;
 }
+.form-control:focus {
+  outline: none; /* Remove the blue outline */
+  border-width: 2.5px;
+  border-color: var(--primary-color); /* Set your desired focus border color */
+  box-shadow: none; /* Prevent any additional shadow */
+}

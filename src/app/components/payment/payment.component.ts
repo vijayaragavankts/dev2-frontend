@@ -55,6 +55,10 @@ export class PaymentComponent {
   isLoading: boolean = false; // Add loader flag
 
   isPartialPayment: boolean = false;
+  isToggleDisabled: boolean = false;
+  isInputDisabled: boolean = false;
+  isOtpSendDisabled: boolean = false;
+  isConfirmButtonDisabled: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -161,15 +165,6 @@ export class PaymentComponent {
     }
   }
 
-  // togglePartialPayment(event: Event) {
-  //   this.isPartialPayment = (event.target as HTMLInputElement).checked;
-
-  //   // If partial payment is not selected, clear the amount input field and disable validation
-  //   if (!this.isPartialPayment) {
-  //     this.paymentForm.get('paymentAmount')?.reset();
-  //   }
-  // }
-
   makePayment() {
     // Validate fields before making payment
     const paymentAmount = this.isPartialPayment
@@ -178,6 +173,7 @@ export class PaymentComponent {
 
     if (paymentAmount <= 0 || !paymentAmount) {
       console.error('Invalid payment amount');
+      this.isConfirmButtonDisabled = false;
       this.snackbar.open(
         'Invalid payment amount. Please enter a valid amount.',
         'Close',
@@ -207,6 +203,7 @@ export class PaymentComponent {
         if (response.success) {
           // Successful payment
           console.log('Payment successful', response);
+
           this.snackbar.open('Payment Successful', 'Close', {
             duration: 2000, // Duration of the toast in milliseconds
           });
@@ -216,6 +213,7 @@ export class PaymentComponent {
         } else {
           // Handle API error response
           console.error('Payment failed: ', response.message);
+
           this.snackbar.open(
             response.message || 'Payment failed. Please try again.',
             'Close',
@@ -236,6 +234,7 @@ export class PaymentComponent {
   }
 
   requestOTP() {
+    this.isOtpSendDisabled = true;
     const paymentAmount = this.isPartialPayment
       ? this.paymentForm.get('paymentAmount')?.value
       : this.finalAmount;
@@ -245,6 +244,42 @@ export class PaymentComponent {
         duration: 2000,
       });
       return;
+    }
+
+    if (this.isPartialPayment) {
+      // if it is partial payment is enabled we want to disable the toggle
+      this.isToggleDisabled = true;
+      this.isInputDisabled = true;
+      // 20% of the final amount should be paid in partial payment
+      if (this.finalAmount !== null && this.finalAmount * 0.2 > paymentAmount) {
+        this.snackbar.open(
+          'Payment amount must be at least 20% of the total invoice amount.',
+          'Close',
+          {
+            duration: 4000,
+          }
+        );
+        this.isInputDisabled = false;
+        this.isOtpSendDisabled = false;
+        return;
+      } else if (
+        this.finalAmount !== null &&
+        this.finalAmount * 0.9 < paymentAmount &&
+        paymentAmount < this.finalAmount
+      ) {
+        this.snackbar.open(
+          'The remaining balance is too small to allow partial payment. Please pay the full amount.',
+          'Close',
+          {
+            duration: 4000,
+          }
+        );
+        this.isInputDisabled = false;
+        this.isOtpSendDisabled = false;
+        return;
+      }
+    } else {
+      this.isToggleDisabled = true;
     }
 
     this.isLoading = true;
@@ -279,7 +314,7 @@ export class PaymentComponent {
 
   verifyOTP() {
     const otp = this.otpForm.get('otp')?.value;
-
+    this.isConfirmButtonDisabled = true;
     if (!otp) {
       this.snackbar.open('Please enter the OTP', 'Close', {
         duration: 2000,
@@ -295,6 +330,7 @@ export class PaymentComponent {
         if (response.success) {
           this.makePayment();
         } else {
+          this.isConfirmButtonDisabled = false;
           this.snackbar.open('Invalid OTP. Please try again.', 'Close', {
             duration: 2000,
           });
@@ -302,6 +338,7 @@ export class PaymentComponent {
       },
       (error) => {
         this.isLoading = false; // Stop loader
+        this.isConfirmButtonDisabled = false;
         console.error('Error verifying OTP', error);
         this.snackbar.open('Error verifying OTP. Please try again.', 'Close', {
           duration: 2000,

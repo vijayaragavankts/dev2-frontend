@@ -343,6 +343,41 @@ input[type="text"] {
   margin: 0;
 }
 
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between cards */
+  justify-content: center; /* Center cards in the container */
+}
+
+.card-wrapper {
+  flex: 1 1 calc(33.33% - 20px); /* Default: 3 cards per row */
+  min-width: 300px; /* Minimum width for cards */
+  max-width: 400px; /* Set maximum width for cards */
+  height: 200px; /* Fixed height for all cards */
+  display: flex; /* Use flexbox for the card content */
+  flex-direction: column; /* Stack contents vertically */
+  justify-content: space-between; /* Distribute space evenly */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .card-wrapper {
+    flex: 1 1 calc(50% - 20px); /* 2 cards per row for medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .card-wrapper {
+    flex: 1 1 100%; /* 1 card per row for small screens */
+    height: auto; /* Allow cards to have auto height */
+    max-width: none; /* Remove max width for small screens */
+    margin-right: 40px;
+  }
+}
+
+/* ============================================================================================================== */
+
 .card-display {
   width: 400px;
   height: 220px;
@@ -436,4 +471,35 @@ input[type="text"] {
 .btn-primary:focus {
   background-color: var(--primary-color);
   outline: none; /* Remove the default browser outline */
+}
+.new-container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically by default */
+}
+
+/* Flex-direction for larger screens */
+/* For Mobile Devices (Portrait) */
+@media (max-width: 767px) {
+  .new-container {
+    flex-direction: column; /* Stack vertically */
+  }
+  .card-display {
+    width: 300px;
+    height: 220px;
+    left: -20px;
+  }
+}
+
+/* For Tablets (Landscape) and Small Desktops */
+@media (min-width: 768px) and (max-width: 1049px) {
+  .new-container {
+    flex-direction: column; /* Still stack vertically */
+  }
+}
+
+/* For Larger Screens (Desktops) */
+@media (min-width: 1250px) {
+  .new-container {
+    flex-direction: row; /* Align horizontally */
+  }
 }

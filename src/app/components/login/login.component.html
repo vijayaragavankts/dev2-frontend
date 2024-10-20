@@ -1,113 +1,116 @@
-<div
-  class="container mt-5 p-4 shadow-lg rounded bg-light"
-  style="max-width: 500px"
->
-  <h2 class="text-center mb-4">Customer Login</h2>
+<div class="container">
+  <div class="row">
+    <!-- Image Section -->
+    <div class="col-md-6 image-section">
+      <img src="assets/chat.svg" alt="Login Image" class="img-fluid" />
+    </div>
 
-  <!-- Customer ID Form -->
-  <form
-    [formGroup]="customerForm"
-    (ngSubmit)="onSendOtp()"
-    class="form-section"
-  >
-    <div class="form-group mb-3">
-      <label for="customerId" class="form-label fw-bold">Customer ID</label>
-      <input
-        type="text"
-        id="customerId"
-        formControlName="customerId"
-        class="form-control border-primary"
-        placeholder="Enter your Customer ID"
-        required
-      />
-      <!-- Validation Error Message -->
-      <div
-        *ngIf="
-          customerForm.get('customerId')?.invalid &&
-          customerForm.get('customerId')?.touched
-        "
-        class="text-danger mt-1"
-      ></div>
-      <div *ngIf="customerErrorMessage" class="text-danger mt-1">
-        <i class="bi bi-exclamation-triangle"></i> {{ customerErrorMessage }}
+    <!-- Form Section -->
+    <div class="col-md-6 form-section">
+      <div class="form-container">
+        <h2 class="text-center mb-4">BBC Login</h2>
+
+        <!-- Customer ID Form -->
+        <form [formGroup]="customerForm" (ngSubmit)="onSendOtp()">
+          <div class="form-group mb-3">
+            <label for="customerId" class="form-label fw-bold"
+              >Customer ID</label
+            >
+            <input
+              type="text"
+              id="customerId"
+              formControlName="customerId"
+              class="form-control border-primary"
+              placeholder="Enter your Customer ID"
+              required
+            />
+            <div
+              *ngIf="
+                customerForm.get('customerId')?.invalid &&
+                customerForm.get('customerId')?.touched
+              "
+              class="text-danger mt-1"
+            ></div>
+            <div *ngIf="customerErrorMessage" class="text-danger mt-1">
+              <i class="bi bi-exclamation-triangle"></i>
+              {{ customerErrorMessage }}
+            </div>
+          </div>
+
+          <!-- Send OTP Button -->
+          <div *ngIf="!otpSent" class="text-center mb-3">
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg w-100"
+              [disabled]="loading"
+            >
+              Send OTP
+            </button>
+          </div>
+        </form>
+
+        <!-- OTP Form -->
+        <form
+          *ngIf="otpSent"
+          [formGroup]="otpForm"
+          (ngSubmit)="onValidateOtp()"
+        >
+          <div class="form-group mb-3">
+            <label for="enteredOtp" class="form-label fw-bold">Enter OTP</label>
+            <input
+              type="text"
+              id="enteredOtp"
+              formControlName="enteredOtp"
+              class="form-control border-primary"
+              placeholder="Enter the OTP"
+              required
+            />
+            <div
+              *ngIf="
+                otpForm.get('enteredOtp')?.invalid &&
+                otpForm.get('enteredOtp')?.touched
+              "
+              class="text-danger mt-1"
+            ></div>
+            <div *ngIf="otpErrorMessage" class="text-danger mt-1">
+              <i class="bi bi-exclamation-triangle"></i> {{ otpErrorMessage }}
+            </div>
+          </div>
+
+          <!-- Resend OTP Button -->
+          <div class="text-center mb-3">
+            <button
+              type="button"
+              class="btn btn-danger btn-lg w-100"
+              (click)="onResendOtp()"
+              [disabled]="countdown > 0 || loading"
+            >
+              {{
+                countdown > 0
+                  ? "Resend OTP in " + countdown + " seconds"
+                  : "Resend OTP"
+              }}
+            </button>
+          </div>
+
+          <!-- Submit OTP Button -->
+          <div class="text-center mb-3">
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg w-100"
+              [disabled]="loading"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+        <!-- Loading Spinner -->
+        <div *ngIf="loading" class="text-center mb-3">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <!-- Send OTP Button -->
-    <div *ngIf="!otpSent" class="text-center mb-3">
-      <button
-        type="submit"
-        class="btn btn-primary btn-lg w-100 shadow-sm blue-btn"
-        [disabled]="loading"
-      >
-        Send OTP
-      </button>
-    </div>
-  </form>
-  <!-- Loading Spinner -->
-
-  <!-- OTP Form -->
-  <form
-    *ngIf="otpSent"
-    [formGroup]="otpForm"
-    (ngSubmit)="onValidateOtp()"
-    class="form-section"
-  >
-    <div class="form-group mb-3">
-      <label for="enteredOtp" class="form-label fw-bold">Enter OTP</label>
-      <input
-        type="text"
-        id="enteredOtp"
-        formControlName="enteredOtp"
-        class="form-control border-primary"
-        placeholder="Enter the OTP"
-        required
-      />
-      <!-- Validation Error Message -->
-      <div
-        *ngIf="
-          otpForm.get('enteredOtp')?.invalid &&
-          otpForm.get('enteredOtp')?.touched
-        "
-        class="text-danger mt-1"
-      ></div>
-      <div *ngIf="otpErrorMessage" class="text-danger mt-1">
-        <i class="bi bi-exclamation-triangle"></i> {{ otpErrorMessage }}
-      </div>
-    </div>
-
-    <!-- Resend OTP Button -->
-    <div class="text-center mb-3">
-      <button
-        type="button"
-        class="btn btn-danger btn-lg w-100 shadow-sm"
-        (click)="onResendOtp()"
-        [disabled]="countdown > 0 || loading"
-      >
-        <!-- Update button text based on countdown -->
-        {{
-          countdown > 0
-            ? "Resend OTP in " + countdown + " seconds"
-            : "Resend OTP"
-        }}
-      </button>
-    </div>
-
-    <!-- Submit OTP Button -->
-    <div class="text-center mb-3">
-      <button
-        type="submit"
-        class="btn btn-success btn-lg w-100 shadow-sm blue-btn"
-        [disabled]="loading"
-      >
-        Submit
-      </button>
-    </div>
-  </form>
-
-  <div *ngIf="loading" class="text-center mb-3">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 </div>

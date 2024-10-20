@@ -31,4 +31,9 @@ export class TransactionService {
   getAllTransactions(): Observable<Transaction[]> {
     return this.http.get<Transaction[]>(`${this.baseUrl}/all`);
   }
+  downloadReceipt(transactionId: number): Observable<Blob> {
+    return this.http.get(`http://localhost:8080/pdf/${transactionId}`, {
+      responseType: 'blob', // Specify response type as Blob for file download
+    });
+  }
 }

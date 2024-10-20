@@ -62,3 +62,94 @@
   color: white;
   border: none;
 }
+.custom-search {
+  border: 2px solid #d8dde3; /* Blue border */
+  border-radius: 25px; /* Rounded corners */
+  padding: 12px 20px; /* Padding */
+  transition: border-color 0.3s; /* Transition effect */
+}
+
+.custom-search:focus {
+  border-color: var(--primary-color); /* Darker blue on focus */
+  /* box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); */
+  outline: none;
+  box-shadow: none;
+}
+
+.custom-select {
+  border: 2px solid #d8dde3;
+  border-radius: 25px; /* Rounded corners */
+  padding: 10px; /* Padding */
+  transition: border-color 0.3s; /* Transition effect */
+}
+
+.custom-select:focus {
+  border-color: var(--primary-color); /* Darker blue on focus */
+  /* box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); */
+  outline: none;
+  box-shadow: none;
+}
+
+/* Adjusting overall layout */
+.d-flex {
+  margin-top: 20px; /* Space above controls */
+}
+
+@media (max-width: 768px) {
+  .w-75 {
+    width: 90%; /* Make search bar wider on smaller screens */
+  }
+  .w-25 {
+    width: 45%; /* Adjust filter/sort widths on smaller screens */
+  }
+}
+
+.search {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.custom-dropdown {
+  position: relative;
+  width: 100%;
+}
+.no-select {
+  user-select: none; /* Non-selectable text */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.dropdown-header {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
